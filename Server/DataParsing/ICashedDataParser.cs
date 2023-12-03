@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Server.DataParsing
 {
-    internal abstract class ICashedDataParser<T>
+    internal abstract class CashedDataParser<T>
     {
         protected TimeSpan TimeOut;
         protected DateTime LastUpdate;
@@ -26,6 +26,12 @@ namespace Server.DataParsing
         }
 
         protected abstract T GetDataFromSource();
+
+        public CashedDataParser(TimeSpan timeOut)
+        {
+            TimeOut = timeOut;
+            LastUpdate = DateTime.MinValue;
+        }
        
     }
 }
