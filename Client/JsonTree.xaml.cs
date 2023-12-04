@@ -47,25 +47,9 @@ namespace Client
 
         private void LoadJson(string jsonString)
         {
-            // Implement JSON parsing and tree view loading logic here
-            // This could involve using Newtonsoft.Json or your preferred JSON library
-            // For simplicity, let's assume you have a JsonTreeViewItem class and LoadTreeView method
             var jsonObject = JObject.Parse(jsonString);
 
             treeView.Items.Add(Convert(jsonObject));
-
-           // var jsonTreeViewItem = ParseJson(jsonString);
-            //LoadTreeView(jsonObject);
-        }
-
-        private JsonTreeViewItem ParseJson(string jsonString)
-        {
-            // Implement your JSON parsing logic here
-            // This could involve using Newtonsoft.Json or your preferred JSON library
-            // For simplicity, let's assume you have a JsonTreeViewItem class
-            // that represents each item in the tree
-            // You may want to implement the actual parsing based on your JSON structure
-            return new JsonTreeViewItem { Key = "Root", Value = "RootValue" };
         }
 
         private TreeViewItem Convert(JToken token)
@@ -117,43 +101,6 @@ namespace Client
             return item;
         }
 
-        //private void LoadTreeView(JToken token)
-        //{
-        //    if (token.Type == JTokenType.Object)
-        //    {
-        //        foreach (var child in token.Children<JProperty>())
-        //        {
-        //            var childItem = ConvertToTreeViewItem(child.Value);
-        //            childItem.Key = child.Name;
-        //            item.Children.Add(childItem);
-        //        }
-        //    }
-        //    else if (token.Type == JTokenType.Array)
-        //    {
-        //        int index = 0;
-        //        foreach (var child in token.Children())
-        //        {
-        //            var childItem = ConvertToTreeViewItem(child);
-        //            childItem.Key = "[" + index + "]";
-        //            item.Children.Add(childItem);
-        //            index++;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        item.Value = token.ToString();
-        //    }
-        //    //treeView.ItemsSource = new[] { ConvertToTreeViewItem(token) };
-        //}
-
-        private JsonTreeViewItem ConvertToTreeViewItem(JsonTreeViewItem item)
-        {
-            // Implement logic to convert JsonTreeViewItem to TreeViewItem
-            // This could involve recursive methods to handle child items
-            // For simplicity, let's assume you have a method that converts
-            // a JsonTreeViewItem to a TreeViewItem
-            return item; // Dummy implementation for simplicity
-        }
     }
 
     public class JsonTreeViewItem
