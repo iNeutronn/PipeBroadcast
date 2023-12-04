@@ -10,17 +10,24 @@ using System.Threading.Tasks;
 
 namespace Server.DataParsing
 {
-    internal class CurencyDataParser : CashedDataParser<CurencyData>
+    internal class CurencyDataParser : CashedDataParser<CurencyData>,IDisposable
     {
-        WebClient webClient = new WebClient();
-        public CurencyDataParser(TimeSpan timeOut) : base(timeOut)
+        private readonly WebClient webClient = new WebClient();
+        public static readonly TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(10);
+        private static string NBUAPIUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json";
+        public CurencyDataParser(TimeSpan? timeOut = null) : base(timeOut ?? DefaultTimeOut)
         {
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable)webClient).Dispose();
         }
 
         protected override CurencyData GetDataFromSource()
         {
-            string jsonUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json";
-            string json = webClient.DownloadString(jsonUrl);
+            
+            string json = webClient.DownloadString(NBUAPIUrl);
             var curencyData = JsonConvert.DeserializeObject<CurencyRate[]>(json)!;
             return new CurencyData { curencyRates = curencyData};
         }
