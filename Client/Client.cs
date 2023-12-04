@@ -23,7 +23,7 @@ internal class Client : IDisposable
         _id = GetId();
         _pipeName = "pipe" + _id.ToString();
         _pipeClient = new NamedPipeClientStream(".", _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
-        _connectionTask = _pipeClient.ConnectAsync();
+        _connectionTask = _pipeClient.ConnectAsync(_cts.Token);
     }
 
     private Guid GetId()
@@ -83,9 +83,22 @@ internal class Client : IDisposable
         {
             if (disposing)
             {
+                _cts.Cancel();
+
+                try
+                {
+                    _connectionTask?.Wait();
+                }
+                catch (AggregateException ex)
+                {
+                    // Handle exceptions if needed
+                    Console.WriteLine($"Exception while waiting for the infinite loop task: {ex}");
+                }
+
+
+                _cts.Dispose();
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
-                //_connectionTask?.Dispose(); 
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer
