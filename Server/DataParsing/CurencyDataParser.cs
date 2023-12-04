@@ -1,12 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Server.DataParsing.DataObjects.Curency;
-using Server.DataParsing.DataObjects.Weather;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.DataParsing
 {
