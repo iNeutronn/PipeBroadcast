@@ -103,10 +103,4 @@ namespace Client
 
     }
 
-    public class JsonTreeViewItem
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
-        public List<JsonTreeViewItem> Children { get; } = new List<JsonTreeViewItem>();
-    }
 }
