@@ -9,41 +9,45 @@ namespace Server
 {
     internal class Client : IDisposable
     {
-        private NamedPipeServerStream _pipeServer;
+        public NamedPipeServerStream _pipeServer { get; }
         private int _id;
-        private bool _IsSubscribedToWeater = false;
-        private bool _IsSubscribedToShares = false;
-        private bool _IsSubscribedToCurency = false;
         private Task _clientCommands;
+        private bool _isSubscribedToWeather;
+        private bool _isSubscribedToShares;
+        private bool _isSubscribedToCurrency;
+        
+
+        public bool IsSubscribedToWeather { get { return _isSubscribedToWeather; } }
+        public bool IsSubscribedToShares  { get { return _isSubscribedToShares; } }
+        public bool IsSubscribedToCurrency { get { return _isSubscribedToCurrency; } }
+        
 
         public Client(string id)
         {
-            _pipeServer = new NamedPipeServerStream("pipe" + id, PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+            _isSubscribedToWeather = false;
+            _isSubscribedToShares = false;
+            _isSubscribedToCurrency = false;
+            _pipeServer = new NamedPipeServerStream("pipe" + id, PipeDirection.InOut, 10, PipeTransmissionMode.Message, PipeOptions.Asynchronous);
             _pipeServer.WaitForConnection();
             ListenClient();
         }
 
         public void ListenClient()
         {
-            // Перевірка, чи пайпа ініційована
             if (_pipeServer == null)
                 throw new InvalidOperationException("NamedPipeServerStream not initialized.");
             
-            // Прослуховування пайпи
             _clientCommands = Task.Run(async () =>
             {
-                byte[] buffer = new byte[256]; // Розмір буфера для зчитування даних
+                byte[] buffer = new byte[256]; 
 
                 while (true)
                 {
-                    // Очікуємо, доки прийдуть дані з пайпи
                     int bytesRead = await _pipeServer.ReadAsync(buffer, 0, buffer.Length);
 
-                    // Якщо дані отримані, конвертуємо їх у рядок
                     string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
                     if (!string.IsNullOrEmpty(receivedData))
-                        // Обробка отриманих даних
                         CommandProcessing(receivedData);
                 }
             });
@@ -54,32 +58,45 @@ namespace Server
             switch (command)
             {
                 case "quit":
+                    SendAnswer("OK");
                     Dispose();
                     break;
                 case "SubscribToShares":
-                    _IsSubscribedToShares = true;
+                    _isSubscribedToShares = true;
+                    SendAnswer("OK");
                     break;
                 case "SubscribToWeather":
-                    _IsSubscribedToWeater = true;
+                    _isSubscribedToWeather = true;
+                    SendAnswer("OK");
                     break;
                 case "SubscribToCurrency":
-                    _IsSubscribedToCurency = true;
+                    _isSubscribedToCurrency = true;
+                    SendAnswer("OK");
                     break;
                 case "UnSubscribToShares":
-                    _IsSubscribedToShares = false;
+                    _isSubscribedToShares = false;
+                    SendAnswer("OK");
                     break;
                 case "UnSubscribToWeather":
-                    _IsSubscribedToWeater = false;
+                    _isSubscribedToWeather = false;
+                    SendAnswer("OK");
                     break;
                 case "UnSubscribToCurrency":
-                    _IsSubscribedToCurency = false;
+                    _isSubscribedToCurrency = false;
+                    SendAnswer("OK");
                     break;
                 default:
+                    SendAnswer("ERR");
                     break;
             }
         }
 
-        // Реалізація інтерфейсу IDisposable
+        public void SendAnswer(string answer)
+        {
+            byte[] ServerAnswer = Encoding.UTF8.GetBytes(answer);
+            _pipeServer.Write(ServerAnswer, 0, ServerAnswer.Length);
+        }
+
         public void Dispose()
         {
             Dispose(true);

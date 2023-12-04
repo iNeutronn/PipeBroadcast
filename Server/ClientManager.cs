@@ -5,6 +5,12 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Server.DataParsing;
+using Server.DataParsing.DataObjects.Curency;
+using Server.DataParsing.DataObjects.Shares;
+using Server.DataParsing.DataObjects.Weather;
+using Server.DataTranslators;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Server
 {
@@ -13,13 +19,22 @@ namespace Server
         private List<Client> _clients;
         private int _idCounter;
         private Task _idThread;
-
+        private IDataTranslator[] _translators;
 
         public ClientManager()
         {
             _clients = new List<Client>();
             _idCounter = 0;
             _idThread = Task.Run(() => idThreadWork());
+            _translators = new IDataTranslator[]
+            {
+               new SharesTranslator(new SharesDataParser(), new TimeSpan(0,1,0) , _clients),
+               new CurrencyTranslator(new CurencyDataParser(), new TimeSpan(0,3,0) , _clients),
+               new WetherTranslator(new WeatherDataParser(), new TimeSpan(0,5,0) , _clients)
+            };
+
+            foreach(var translator in _translators)
+                translator.StartTranslate();   
         }
 
         public IEnumerator<Client> GetEnumerator()
