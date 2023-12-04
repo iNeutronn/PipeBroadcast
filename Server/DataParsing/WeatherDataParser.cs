@@ -9,9 +9,10 @@ namespace Server.DataParsing
         private string _apiKey = "viSk4R1eBd7nPMPHImCbcL2rTcUCK8FF";
         private string _cityKey = "324561"; //Lviv
         WebClient webClient = new WebClient();
-
-        public WeatherDataParser(TimeSpan timeOut) : base(timeOut)
+        public static readonly TimeSpan DefoultTimeOut = TimeSpan.FromMinutes(30);
+        public WeatherDataParser(TimeSpan? timeOut = null) : base(timeOut ?? DefoultTimeOut)
         {
+
         }
 
         public void Dispose()
