@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace Client;
 
-internal class Client : IDisposable
+internal class Client1 : IDisposable
 {
     private Guid _id;
     private string _pipeName;
@@ -18,12 +18,13 @@ internal class Client : IDisposable
     private readonly CancellationTokenSource _cts = new CancellationTokenSource();
     private bool disposedValue;
 
-    Client()
+    Client1()
     {
         _id = GetId();
         _pipeName = "pipe" + _id.ToString();
         _pipeClient = new NamedPipeClientStream(".", _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
         _connectionTask = _pipeClient.ConnectAsync(_cts.Token);
+        //Task.Run(ListenServer);
     }
 
     private Guid GetId()
@@ -53,7 +54,7 @@ internal class Client : IDisposable
         return _id;
     }
 
-    public string Request(string command)
+    public void Request(string command)
     {
         if (_pipeClient == null)
         {
@@ -69,12 +70,31 @@ internal class Client : IDisposable
         _pipeClient.Write(data, 0, data.Length);
 
 
+        //byte[] buffer = new byte[256];
+        //_pipeClient.Read(buffer, 0, buffer.Length);
+
+        //string response = Encoding.UTF8.GetString(buffer);
+
+        //return response;
+    }
+
+    public void ListenServer(Stream stream)
+    {
+        using StreamWriter streamWriter = new StreamWriter(stream);
+
         byte[] buffer = new byte[256];
-        _pipeClient.Read(buffer, 0, buffer.Length);
 
-        string response = Encoding.UTF8.GetString(buffer);
+        while (true)
+        {
+            int bytesRead = _pipeClient.Read(buffer, 0, buffer.Length);
 
-        return response;
+            if (bytesRead > 0)
+            {
+                string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                // Handle received data from the server as needed
+                streamWriter.WriteLine("Received from server: " + receivedData);
+            }
+        }
     }
 
     protected virtual void Dispose(bool disposing)
@@ -108,7 +128,7 @@ internal class Client : IDisposable
     }
 
     // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-    ~Client()
+    ~Client1()
     {
         // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         Dispose(disposing: false);
