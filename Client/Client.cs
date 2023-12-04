@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Client;
 
@@ -14,6 +15,7 @@ internal class Client : IDisposable
     private string _pipeName;
     private NamedPipeClientStream _pipeClient;
     private Task _connectionTask;
+    private readonly CancellationTokenSource _cts = new CancellationTokenSource();
     private bool disposedValue;
 
     Client()
