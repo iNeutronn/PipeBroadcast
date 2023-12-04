@@ -1,6 +1,6 @@
 ﻿using Server.DataParsing;
 
-CurencyTest();// no needed / can be changed to any other function
+SharesTest();// no needed / can be changed to any other function
 
 
 void WheatherTest()
@@ -13,6 +13,12 @@ void WheatherTest()
 void CurencyTest()
 {
     CurencyDataParser parser = new CurencyDataParser(TimeSpan.FromMinutes(5));
+    var data = parser.GetData();
+    Console.WriteLine(data);
+}
+void SharesTest()
+{
+    SharesDataParser parser = new SharesDataParser(TimeSpan.FromMinutes(5));
     var data = parser.GetData();
     Console.WriteLine(data);
 }
