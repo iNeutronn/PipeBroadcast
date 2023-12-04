@@ -54,7 +54,14 @@ internal class Client : IDisposable
     public string Request(string command)
     {
         if (_pipeClient == null)
+        {
             throw new InvalidOperationException("NamedPipeClientStream not initialized.");
+        }    
+        
+        if (!_connectionTask.Wait(TimeSpan.FromSeconds(1)))
+        {
+            throw new TimeoutException("NamedPipeClientStream not connected.");
+        }
 
         byte[] data = Encoding.UTF8.GetBytes(command);
         _pipeClient.Write(data, 0, data.Length);
@@ -76,6 +83,7 @@ internal class Client : IDisposable
             {
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
+                //_connectionTask?.Dispose(); 
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer
