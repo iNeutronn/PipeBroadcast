@@ -27,13 +27,12 @@ namespace Server
             _isSubscribedToWeather = false;
             _isSubscribedToShares = false;
             _isSubscribedToCurrency = false;
-            _pipeServer = new NamedPipeServerStream("pipe" + id, PipeDirection.InOut, 10, PipeTransmissionMode.Message, PipeOptions.Asynchronous);
-            _pipeServer.WaitForConnection();
-            ListenClient();
+            _pipeServer = new NamedPipeServerStream("pipe" + id, PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
         }
 
         public void ListenClient()
         {
+            _pipeServer.WaitForConnection();
             if (_pipeServer == null)
                 throw new InvalidOperationException("NamedPipeServerStream not initialized.");
             

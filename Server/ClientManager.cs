@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO.Pipes;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Server.DataParsing;
 using Server.DataParsing.DataObjects.Curency;
 using Server.DataParsing.DataObjects.Shares;
 using Server.DataParsing.DataObjects.Weather;
 using Server.DataTranslators;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Server
 {
-    internal class ClientManager : IEnumerable<Client>
+    internal class ClientManager : IEnumerable<Client>, IDisposable
     {
         private List<Client> _clients;
         private int _idCounter;
         private Task _idThread;
         private IDataTranslator[] _translators;
+        private bool _isRunning = true;
 
         public ClientManager()
         {
@@ -51,27 +48,55 @@ namespace Server
         {
             using (NamedPipeServerStream idPipe = new NamedPipeServerStream("idPipe", PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous))
             {
-                while (true)
+                while (_isRunning)
                 {
                     await idPipe.WaitForConnectionAsync();
+                    //Console.WriteLine("IsConnected");
 
                     Guid clientId = Guid.NewGuid();
-
+                    //Console.WriteLine("Id = " + clientId);
                     _clients.Add(new Client(clientId.ToString()));
                     ++_idCounter;
 
-                    byte[] clientIdBytes = clientId.ToByteArray();
+                    byte[] clientIdBytes = Encoding.UTF8.GetBytes(clientId.ToString());
+                    //Console.WriteLine(clientIdBytes);
+                    //Console.WriteLine(clientIdBytes.Length);
 
                     idPipe.Write(clientIdBytes, 0, clientIdBytes.Length);
-
+                    _clients[^1].ListenClient();
+                    //Console.WriteLine("IsWrite");
                     byte[] confirmation = new byte[1];
                     int bytesRead = await idPipe.ReadAsync(confirmation, 0, confirmation.Length);
-
+                    Console.WriteLine(confirmation.ToString());
                     idPipe.Disconnect();
                 }
             }
+            
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
+        protected virtual void Dispose(bool disposing)
+        {
+             if (disposing)
+             {
+                _isRunning = false;
+                _idThread.Wait();
+                _idThread.Dispose();
+                _clients.Clear();
+                foreach (var translator in _translators)
+                 {
+                     translator.StopTranslate();
+                     if (translator is IDisposable disposableTranslator)
+                     {
+                         disposableTranslator.Dispose();
+                     }
+                 }
+             }
+        }
     }
 }

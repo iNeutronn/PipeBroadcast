@@ -15,8 +15,9 @@ namespace Server
         void StopTranslate();
     }
 
-    abstract class DataTranslator<T>: IDataTranslator
-	{
+
+    abstract class DataTranslator<T> : IDataTranslator, IDisposable
+    {
         protected static readonly object _pipeLock = new object();
         protected TimeSpan _interval;
         protected CashedDataParser<T> _data;
@@ -29,9 +30,9 @@ namespace Server
             _data = data;
             _interval = interval;
             _timer = new Timer(Translate, null, Timeout.Infinite, Timeout.Infinite);
-
         }
-        public void StartTranslate() 
+
+        public void StartTranslate()
         {
             _timer.Change(0, (int)_interval.TotalMilliseconds);
         }
@@ -43,6 +44,20 @@ namespace Server
 
         protected abstract void Translate(object state);
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _timer.Dispose();
+            }
+        }
     }
+
 }
 
