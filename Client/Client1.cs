@@ -19,14 +19,22 @@ internal class Client1 : IDisposable
     private readonly CancellationTokenSource _clientClosencst = new CancellationTokenSource();
     private bool disposedValue;
 
+    public event EventHandler<string> ServerResponseReceived;
+
     public Client1(string host)
     {
-        _id = GetIdFromServer();
-        _pipeName = "pipe" + _id.ToString();
         _host = host;
+    }
+
+    private void Connect()
+    {
+        GetIdFromServer();
+        _pipeName = "pipe" + _id.ToString();
         _pipeClient = new NamedPipeClientStream(_host, _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+        //TODO: розібратися з token
         _connectionTask = _pipeClient.ConnectAsync(_clientClosencst.Token);
     }
+
 
     private void GetIdFromServer()
     {
@@ -55,7 +63,7 @@ internal class Client1 : IDisposable
 
     public void SendCommand(string command)
     {
-        if (_pipeClient == null)
+        if (_pipeClient == null || _connectionTask == null)
         {
             throw new InvalidOperationException("NamedPipeClientStream not initialized.");
         }    
@@ -77,10 +85,8 @@ internal class Client1 : IDisposable
         //return response;
     }
 
-    public void ListenServer(Stream stream)
+    public void ListenServer()
     {
-        using StreamWriter streamWriter = new StreamWriter(stream);
-
         byte[] buffer = new byte[256];
 
         while (true)
@@ -91,10 +97,16 @@ internal class Client1 : IDisposable
             {
                 string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 // Handle received data from the server as needed
-                streamWriter.WriteLine("Received from server: " + receivedData);
+                OnServerResponseReceived(receivedData);
             }
         }
     }
+
+    protected virtual void OnServerResponseReceived(string response)
+    {
+        ServerResponseReceived?.Invoke(this, response);
+    }
+
 
     protected virtual void Dispose(bool disposing)
     {
