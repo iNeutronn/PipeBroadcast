@@ -13,23 +13,24 @@ internal class Client1 : IDisposable
 {
     private Guid _id;
     private string _pipeName;
+    private string _host;
     private NamedPipeClientStream _pipeClient;
     private Task _connectionTask;
-    private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+    private readonly CancellationTokenSource _clientClosencst = new CancellationTokenSource();
     private bool disposedValue;
 
-    Client1()
+    public Client1(string host)
     {
-        _id = GetId();
+        _id = GetIdFromServer();
         _pipeName = "pipe" + _id.ToString();
-        _pipeClient = new NamedPipeClientStream(".", _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
-        _connectionTask = _pipeClient.ConnectAsync(_cts.Token);
-        //Task.Run(ListenServer);
+        _host = host;
+        _pipeClient = new NamedPipeClientStream(_host, _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+        _connectionTask = _pipeClient.ConnectAsync(_clientClosencst.Token);
     }
 
-    private Guid GetId()
+    private void GetIdFromServer()
     {
-        using NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", "idPipe", PipeDirection.InOut);
+        using NamedPipeClientStream pipeClient = new NamedPipeClientStream(_host, "idPipe", PipeDirection.InOut);
 
         try
         {
@@ -50,11 +51,9 @@ internal class Client1 : IDisposable
         {
             pipeClient.Close();
         }
-
-        return _id;
     }
 
-    public void Request(string command)
+    public void SendCommand(string command)
     {
         if (_pipeClient == null)
         {
@@ -103,7 +102,7 @@ internal class Client1 : IDisposable
         {
             if (disposing)
             {
-                _cts.Cancel();
+                _clientClosencst.Cancel();
 
                 try
                 {
@@ -116,7 +115,7 @@ internal class Client1 : IDisposable
                 }
 
 
-                _cts.Dispose();
+                _clientClosencst.Dispose();
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
             }
