@@ -30,7 +30,7 @@ namespace Server
             _pipeServer = new NamedPipeServerStream("pipe" + id, PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
         }
 
-        public void ListenClient()
+        public void ListenClient() 
         {
             _pipeServer.WaitForConnection();
             if (_pipeServer == null)
