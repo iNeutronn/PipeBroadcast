@@ -32,7 +32,7 @@ namespace Server
             ListenClient();
         }
 
-        public void ListenClient()
+        public void ListenClient() 
         {
             if (_pipeServer == null)
                 throw new InvalidOperationException("NamedPipeServerStream not initialized.");
