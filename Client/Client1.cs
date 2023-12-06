@@ -12,11 +12,8 @@ namespace Client;
 internal class Client1 : IDisposable
 {
     private Guid _id;
-    private string _pipeName;
     private string _host;
     private NamedPipeClientStream _pipeClient; 
-    private Task _connectionTask;
-    private readonly CancellationTokenSource _clientClosencst = new CancellationTokenSource();
     private bool disposedValue;
 
     public event EventHandler<string> ServerResponseReceived;
@@ -29,10 +26,9 @@ internal class Client1 : IDisposable
     private void Connect()
     {
         GetIdFromServer();
-        _pipeName = "pipe" + _id.ToString();
-        _pipeClient = new NamedPipeClientStream(_host, _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
-        //TODO: розібратися з token
-        _connectionTask = _pipeClient.ConnectAsync(_clientClosencst.Token);
+        string pipeName = "pipe" + _id.ToString();
+        _pipeClient = new NamedPipeClientStream(_host, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+        _pipeClient.Connect();
     }
 
 
@@ -63,26 +59,13 @@ internal class Client1 : IDisposable
 
     public void SendCommand(string command)
     {
-        if (_pipeClient == null || _connectionTask == null)
+        if (_pipeClient == null)
         {
             throw new InvalidOperationException("NamedPipeClientStream not initialized.");
         }    
-        
-        if (!_connectionTask.Wait(TimeSpan.FromSeconds(1)))
-        {
-            throw new TimeoutException("NamedPipeClientStream not connected.");
-        }
 
         byte[] data = Encoding.UTF8.GetBytes(command);
         _pipeClient.Write(data, 0, data.Length);
-
-
-        //byte[] buffer = new byte[256];
-        //_pipeClient.Read(buffer, 0, buffer.Length);
-
-        //string response = Encoding.UTF8.GetString(buffer);
-
-        //return response;
     }
 
     public void ListenServer()
@@ -114,20 +97,6 @@ internal class Client1 : IDisposable
         {
             if (disposing)
             {
-                _clientClosencst.Cancel();
-
-                try
-                {
-                    _connectionTask?.Wait();
-                }
-                catch (AggregateException ex)
-                {
-                    // Handle exceptions if needed
-                    Console.WriteLine($"Exception while waiting for the infinite loop task: {ex}");
-                }
-
-
-                _clientClosencst.Dispose();
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
             }
