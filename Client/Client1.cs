@@ -13,23 +13,32 @@ internal class Client1 : IDisposable
 {
     private Guid _id;
     private string _pipeName;
-    private NamedPipeClientStream _pipeClient;
+    private string _host;
+    private NamedPipeClientStream _pipeClient; 
     private Task _connectionTask;
-    private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+    private readonly CancellationTokenSource _clientClosencst = new CancellationTokenSource();
     private bool disposedValue;
 
-    Client1()
+    public event EventHandler<string> ServerResponseReceived;
+
+    public Client1(string host)
     {
-        _id = GetId();
-        _pipeName = "pipe" + _id.ToString();
-        _pipeClient = new NamedPipeClientStream(".", _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
-        _connectionTask = _pipeClient.ConnectAsync(_cts.Token);
-        //Task.Run(ListenServer);
+        _host = host;
     }
 
-    private Guid GetId()
+    private void Connect()
     {
-        using NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", "idPipe", PipeDirection.InOut);
+        GetIdFromServer();
+        _pipeName = "pipe" + _id.ToString();
+        _pipeClient = new NamedPipeClientStream(_host, _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+        //TODO: розібратися з token
+        _connectionTask = _pipeClient.ConnectAsync(_clientClosencst.Token);
+    }
+
+
+    private void GetIdFromServer()
+    {
+        using NamedPipeClientStream pipeClient = new NamedPipeClientStream(_host, "idPipe", PipeDirection.InOut);
 
         try
         {
@@ -50,13 +59,11 @@ internal class Client1 : IDisposable
         {
             pipeClient.Close();
         }
-
-        return _id;
     }
 
-    public void Request(string command)
+    public void SendCommand(string command)
     {
-        if (_pipeClient == null)
+        if (_pipeClient == null || _connectionTask == null)
         {
             throw new InvalidOperationException("NamedPipeClientStream not initialized.");
         }    
@@ -78,10 +85,8 @@ internal class Client1 : IDisposable
         //return response;
     }
 
-    public void ListenServer(Stream stream)
+    public void ListenServer()
     {
-        using StreamWriter streamWriter = new StreamWriter(stream);
-
         byte[] buffer = new byte[256];
 
         while (true)
@@ -92,10 +97,16 @@ internal class Client1 : IDisposable
             {
                 string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 // Handle received data from the server as needed
-                streamWriter.WriteLine("Received from server: " + receivedData);
+                OnServerResponseReceived(receivedData);
             }
         }
     }
+
+    protected virtual void OnServerResponseReceived(string response)
+    {
+        ServerResponseReceived?.Invoke(this, response);
+    }
+
 
     protected virtual void Dispose(bool disposing)
     {
@@ -103,7 +114,7 @@ internal class Client1 : IDisposable
         {
             if (disposing)
             {
-                _cts.Cancel();
+                _clientClosencst.Cancel();
 
                 try
                 {
@@ -116,7 +127,7 @@ internal class Client1 : IDisposable
                 }
 
 
-                _cts.Dispose();
+                _clientClosencst.Dispose();
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
             }
