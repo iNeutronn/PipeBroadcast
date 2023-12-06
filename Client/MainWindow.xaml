@@ -8,16 +8,16 @@
         Title="MainWindow" Height="420" Width="400">
     <Grid>
         <Image HorizontalAlignment="Left" Height="142" Margin="10,10,0,0" VerticalAlignment="Top" Width="148" Source="/360_F_537415032_2arob4vBmkeVYQRCRKxsN7dp2eWZWSOq.jpg"/>
-        <Label Content="Hello user" HorizontalAlignment="Left" Margin="38,142,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
-        <Label Content="user id" HorizontalAlignment="Left" Margin="58,173,0,0" VerticalAlignment="Top"/>
+        <Label Content="Hello User" HorizontalAlignment="Left" Margin="38,142,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <Label Content="user name" HorizontalAlignment="Left" Margin="58,173,0,0" VerticalAlignment="Top"/>
         <Rectangle Fill="#FFE3E3E3" Margin="158,22,0,28" HorizontalAlignment="Left" Width="224" />
         <Image HorizontalAlignment="Left" Height="60" Margin="182,92,0,0" VerticalAlignment="Top" Width="68" Source="/4804221.png"/>
         <Image HorizontalAlignment="Left" Height="41" Margin="192,186,0,0" VerticalAlignment="Top" Width="46" Source="/3094829.png"/>
-        <Image HorizontalAlignment="Left" Height="44" Margin="189,275,0,0" VerticalAlignment="Top" Width="54" Source="/71123.png"/>
-        <Label Content="Subscriptions" HorizontalAlignment="Left" Margin="218,35,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <Image HorizontalAlignment="Left" Height="44" Margin="192,275,0,0" VerticalAlignment="Top" Width="54" Source="/71123.png"/>
+        <Label Content="Subscriptions" HorizontalAlignment="Left" Margin="212,37,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
         <Button Content="Weather" HorizontalAlignment="Left" Height="32" Margin="257,106,0,0" VerticalAlignment="Top" Width="102" Background="#FFCFCFCF"/>
         <Button Content="Company shares" HorizontalAlignment="Left" Height="32" Margin="257,190,0,0" VerticalAlignment="Top" Width="102" Background="#FFCFCFCF"/>
-        <Button Content="Exchange rate" HorizontalAlignment="Left" Height="32" Margin="257,287,0,0" VerticalAlignment="Top" Width="102" Background="#FFCFCFCF"/>
+        <Button Content="Exchange rate" HorizontalAlignment="Left" Height="32" Margin="257,281,0,0" VerticalAlignment="Top" Width="102" Background="#FFCFCFCF"/>
 
 
 
