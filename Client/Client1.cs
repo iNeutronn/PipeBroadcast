@@ -14,7 +14,7 @@ internal class Client1 : IDisposable
     private Guid _id;
     private string _pipeName;
     private string _host;
-    private NamedPipeClientStream _pipeClient;
+    private NamedPipeClientStream _pipeClient; 
     private Task _connectionTask;
     private readonly CancellationTokenSource _clientClosencst = new CancellationTokenSource();
     private bool disposedValue;
