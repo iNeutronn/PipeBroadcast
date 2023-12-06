@@ -1,14 +1,28 @@
-﻿using Server.DataParsing;
+using Server.DataParsing;
 using Server;
 using System.Runtime.ConstrainedExecution;
 
-main();
 
-void main()
+
+SharesTest();// no needed / can be changed to any other function
+
+
+void WheatherTest()
 {
-    ClientManager server = new ClientManager();
-    while (true)
-    {
-        Thread.Sleep(1000000000);
-    }
+    WeatherDataParser parser = new WeatherDataParser(TimeSpan.FromMinutes(5));
+    var data = parser.GetData();
+    Console.WriteLine(data.Headline.Text);
+
+}
+void CurencyTest()
+{
+    CurencyDataParser parser = new CurencyDataParser(TimeSpan.FromMinutes(5));
+    var data = parser.GetData();
+    Console.WriteLine(data);
+}
+void SharesTest()
+{
+    SharesDataParser parser = new SharesDataParser(TimeSpan.FromMinutes(5));
+    var data = parser.GetData();
+    Console.WriteLine(data);
 }
