@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +23,20 @@ namespace Client
         public Registration()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow mainWindow = new MainWindow(IPAddress.Parse(hostIp.Text));
+                mainWindow.Show();
+                this.Close();
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Invalid IP Address");
+            }
         }
     }
 }

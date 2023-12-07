@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,9 +22,12 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private IPAddress _hostIP;
+        public MainWindow(IPAddress hostIP)
         {
             InitializeComponent();
+            _hostIP = hostIP;
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
