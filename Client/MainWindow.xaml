@@ -11,7 +11,7 @@
         <Label Content="Hello user" HorizontalAlignment="Left" Margin="38,142,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
         <Label Content="user id" HorizontalAlignment="Left" Margin="58,173,0,0" VerticalAlignment="Top"/>
         <Rectangle Fill="#FFE3E3E3" Margin="158,22,0,28" HorizontalAlignment="Left" Width="224" />
-        <Image HorizontalAlignment="Left" Height="60" Margin="182,92,0,0" VerticalAlignment="Top" Width="68" Source="/Images/4804221.png"/>
+        <Image HorizontalAlignment="Left" Height="54" Margin="183,106,0,0" VerticalAlignment="Top" Width="60" Source="/4804221.png"/>
         <Image HorizontalAlignment="Left" Height="41" Margin="192,186,0,0" VerticalAlignment="Top" Width="46" Source="/Images/3094829.png"/>
         <Image HorizontalAlignment="Left" Height="44" Margin="189,275,0,0" VerticalAlignment="Top" Width="54" Source="/Images/71123.png"/>
         <Label Content="Subscriptions" HorizontalAlignment="Left" Margin="218,35,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
