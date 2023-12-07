@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="4804221.png" />
     <Resource Include="Images\3094829.png" />
     <Resource Include="Images\3533-20-540x540.jpg" />
     <Resource Include="Images\360_F_537415032_2arob4vBmkeVYQRCRKxsN7dp2eWZWSOq.jpg" />
