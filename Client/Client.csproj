@@ -7,4 +7,48 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="3094829.png" />
+    <None Remove="3533-20-540x540.jpg" />
+    <None Remove="360_F_537415032_2arob4vBmkeVYQRCRKxsN7dp2eWZWSOq.jpg" />
+    <None Remove="4216422.png" />
+    <None Remove="426392.png" />
+    <None Remove="4804221.png" />
+    <None Remove="71123.png" />
+    <None Remove="CLOUDY_GREY_big.jpg" />
+    <None Remove="flag-shvetsii_b11.jpg" />
+    <None Remove="flag-velikobritanii-union-jack.jpg" />
+    <None Remove="images.png" />
+    <None Remove="kisspng-computer-icons-stock-saving-5af9872e04ab00.4562394215263025100191.jpg" />
+    <None Remove="kisspng-port-city-collision-currency-computer-icons-exchan-5ae07b9fdc7ed3.4767394215246611519032.jpg" />
+    <None Remove="png-transparent-analytics-chart-growth-increasing-stocks-business-success-icon.png" />
+    <None Remove="завантаження %281%29.jpg" />
+    <None Remove="завантаження %281%29.png" />
+    <None Remove="завантаження12.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="flag-shvetsii_b11.jpg" />
+    <Resource Include="flag-velikobritanii-union-jack.jpg" />
+    <Resource Include="Images\3094829.png" />
+    <Resource Include="Images\3533-20-540x540.jpg" />
+    <Resource Include="Images\360_F_537415032_2arob4vBmkeVYQRCRKxsN7dp2eWZWSOq.jpg" />
+    <Resource Include="Images\4216422.png" />
+    <Resource Include="Images\426392.png" />
+    <Resource Include="Images\4804221.png" />
+    <Resource Include="Images\71123.png" />
+    <Resource Include="Images\CLOUDY_GREY_big.jpg" />
+    <Resource Include="Images\images.png" />
+    <Resource Include="Images\kisspng-computer-icons-stock-saving-5af9872e04ab00.4562394215263025100191.jpg" />
+    <Resource Include="Images\kisspng-port-city-collision-currency-computer-icons-exchan-5ae07b9fdc7ed3.4767394215246611519032.jpg" />
+    <Resource Include="Images\png-transparent-analytics-chart-growth-increasing-stocks-business-success-icon.png" />
+    <Resource Include="завантаження (1).jpg" />
+    <Resource Include="завантаження (1).png" />
+    <Resource Include="завантаження12.png" />
+  </ItemGroup>
+
 </Project>
