@@ -7,19 +7,67 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="420" Width="400">
     <Grid>
-        <Image HorizontalAlignment="Left" Height="142" Margin="10,10,0,0" VerticalAlignment="Top" Width="148" Source="/Images/360_F_537415032_2arob4vBmkeVYQRCRKxsN7dp2eWZWSOq.jpg"/>
-        <Label Content="Hello user" HorizontalAlignment="Left" Margin="38,142,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
-        <Label Content="user id" HorizontalAlignment="Left" Margin="58,173,0,0" VerticalAlignment="Top"/>
-        <Rectangle Fill="#FFE3E3E3" Margin="158,22,0,28" HorizontalAlignment="Left" Width="224" />
-        <Image HorizontalAlignment="Left" Height="60" Margin="182,92,0,0" VerticalAlignment="Top" Width="68" Source="/Images/4804221.png"/>
-        <Image HorizontalAlignment="Left" Height="41" Margin="192,186,0,0" VerticalAlignment="Top" Width="46" Source="/Images/3094829.png"/>
-        <Image HorizontalAlignment="Left" Height="44" Margin="189,275,0,0" VerticalAlignment="Top" Width="54" Source="/Images/71123.png"/>
-        <Label Content="Subscriptions" HorizontalAlignment="Left" Margin="218,35,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
-        <Button x:Name="WatherButton" Content="Weather" HorizontalAlignment="Left" Height="32" Margin="257,106,0,0" VerticalAlignment="Top" Width="102" Background="#FFCFCFCF" Click="WatherButton_Click"/>
-        <Button Content="Company shares" HorizontalAlignment="Left" Height="32" Margin="257,190,0,0" VerticalAlignment="Top" Width="102" Background="#FFCFCFCF"/>
-        <Button Content="Exchange rate" HorizontalAlignment="Left" Height="32" Margin="257,281,0,0" VerticalAlignment="Top" Width="102" Background="#FFCFCFCF"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
 
 
+            <Rectangle Grid.Column="1" Fill="#FFE3E3E3"/>
+
+            <StackPanel Orientation="Vertical">
+                <Separator Height="10" Visibility="Hidden"/>
+                <Image HorizontalAlignment="Center" VerticalAlignment="Top" Height="142" Width="140" Source="/Images/360_F_537415032_2arob4vBmkeVYQRCRKxsN7dp2eWZWSOq.jpg"/>
+                <Label Content="Hello user" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+                <Label Content="user id" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.6*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Subscriptions" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Grid.Column="1" Grid.Row="1" Height="60" VerticalAlignment="Center" Width="68" Source="/Images/4804221.png"/>
+                    <Separator Width="20" Visibility="Hidden"/>
+                    <Button Grid.Column="1" Grid.Row="1" x:Name="WatherButton" Content="Weather" VerticalAlignment="Center" Width="102" Height="32" Background="#FFCFCFCF" Click="WatherButton_Click"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Grid.Column="1" Grid.Row="1" Height="60" VerticalAlignment="Center" Width="68" Source="/Images/3094829.png"/>
+                    <Separator Width="20" Visibility="Hidden"/>
+                    <Button Grid.Column="1" Grid.Row="1"  Content="Company shares" VerticalAlignment="Center" Width="102" Height="32" Background="#FFCFCFCF" Click="SharesButton_Click"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Grid.Column="1" Grid.Row="1" Height="60" VerticalAlignment="Center" Width="68" Source="/Images/71123.png"/>
+                    <Separator Width="20" Visibility="Hidden"/>
+                    <Button Grid.Column="1" Grid.Row="1"  Content="Exchange rate" VerticalAlignment="Center" Width="102" Height="32" Background="#FFCFCFCF" Click="CurrencyButton_Click"/>
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
 
     </Grid>
+    
 </Window>

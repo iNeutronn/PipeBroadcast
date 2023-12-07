@@ -42,5 +42,17 @@ namespace Client
         {
             _clientPipe.SubscribeToWeather();
         }
+
+        private void SharesButton_Click(object sender, RoutedEventArgs e)
+        {
+            _clientPipe.SubscribeToShares();
+        }
+
+        private void CurrencyButton_Click(object sender, RoutedEventArgs e)
+        {
+            _clientPipe.SubscribeToCurrency();
+        }
+
+
     }
 }

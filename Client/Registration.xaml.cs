@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Net;
 
 namespace Client
 {
@@ -26,35 +27,11 @@ namespace Client
     public partial class Registration : Window
     {
 
-        TradingData tradingData;
-        Client1 client;
-
         public Registration()
         {
             InitializeComponent();
-            client = new Client1(".");
-            client.ServerResponseReceived += Client_ServerResponseReceived;
         }
 
-        private void Client_ServerResponseReceived(object? sender, string e)
-        {
-            if(e.Length > 10)
-            {
-                tradingData = JsonConvert.DeserializeObject<TradingData>(e);
-            }
-
-            Debug.WriteLine(e);
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            client.Connect();
-            client.SendCommand("SubscribToShares");
-            Thread.Sleep(15000);
-            client.SendCommand("UnSubscribToShares");
-            client.SendCommand("quit");
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

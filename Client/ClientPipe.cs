@@ -3,24 +3,20 @@ using System.IO.Pipes;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Client;
 
 
 
-internal class Client1 : IDisposable
+internal class ClientPipe : IDisposable
 {
     private Guid _id;
     private string _host;
     private NamedPipeClientStream _pipeClient;
     private Task _serverResponses;
     private bool disposedValue;
-    private Thread lisenServerThrerad;
-
-    private bool _isSubscribedToWeather = false;
-    private bool _isSubscribedToShares = false;
-    private bool _isSubscribedToCurrency = false;
-
+    private Thread listenServerThrerad;
 
 
     public event EventHandler<string> ServerResponseReceived;
@@ -30,10 +26,6 @@ internal class Client1 : IDisposable
         _host = host;
     }
 
-    public void Connect()
-    {
-        SendCommand("SubscribToWeather");
-    }
     public void Connect()
     {
         GetIdFromServer();
@@ -117,9 +109,38 @@ internal class Client1 : IDisposable
         ServerResponseReceived?.Invoke(this, response);
     }
 
+    #region subscriprion functions
+    public void SubscribeToWeather()
+    {
+        SendCommand("SubscribToWeather");
+    }
 
-  
+    public void SubscribeToShares()
+    {
+        SendCommand("SubscribToShares");
+    }
 
+    public void SubscribeToCurrency()
+    {
+        SendCommand("SubscribToCurrency");
+    }
+
+    public void UnSubscribeToWeather()
+    {
+        SendCommand("UnSubscribToWeather");
+    }
+
+    public void UnSubscribeToShares()
+    {
+        SendCommand("UnSubscribToShares");
+    }
+
+    public void unSubscribeToCurrency()
+    {
+        SendCommand("UnSubscribToCurrency");
+    }
+
+    #endregion
 
     protected virtual void Dispose(bool disposing)
     {
@@ -152,4 +173,6 @@ internal class Client1 : IDisposable
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
+
+  
 }

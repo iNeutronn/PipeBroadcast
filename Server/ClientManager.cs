@@ -25,9 +25,9 @@ namespace Server
             _idThread = Task.Run(() => idThreadWork());
             _translators = new IDataTranslator[]
             {
-               new SharesTranslator(new SharesDataParser(), new TimeSpan(0,0,10) , _clients),
-               new CurrencyTranslator(new CurencyDataParser(), new TimeSpan(0,1,0) , _clients),
-               new WetherTranslator(new WeatherDataParser(), new TimeSpan(0,1,0) , _clients)
+               new SharesTranslator(new SharesDataParser(), TimeSpan.FromSeconds(100000) , _clients),
+               new CurrencyTranslator(new CurencyDataParser(), new TimeSpan(0,3,0) , _clients),
+               new WetherTranslator(new WeatherDataParser(), TimeSpan.FromSeconds(10) , _clients)
             };
 
             foreach(var translator in _translators)
@@ -72,15 +72,13 @@ namespace Server
 
                    
 
-
                     //Console.WriteLine("IsWrite");
                     byte[] confirmation = new byte[1];
                    // int bytesRead = await idPipe.ReadAsync(confirmation, 0, confirmation.Length);
                     idPipe.Read(confirmation, 0, confirmation.Length);
                     Console.WriteLine(confirmation.ToString());
 
-                    _clients[^1].ListenClient();
-
+                    client.ListenClient();
                     idPipe.Disconnect();
                 }
             }
