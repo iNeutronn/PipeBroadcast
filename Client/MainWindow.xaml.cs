@@ -32,12 +32,6 @@ namespace Client
             Task.Run(() => _clientPipe.Connect());
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-
-        }
-
         private void WatherButton_Click(object sender, RoutedEventArgs e)
         {
             _clientPipe.SubscribeToWeather();
