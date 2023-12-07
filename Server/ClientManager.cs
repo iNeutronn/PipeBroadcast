@@ -44,6 +44,11 @@ namespace Server
             return ((IEnumerable)_clients).GetEnumerator();
         }
 
+        public void RemoveClient(Client client)
+        {
+            _clients.Remove(client);
+        }
+
         private async Task idThreadWork()
         {
             using (NamedPipeServerStream idPipe = new NamedPipeServerStream("idPipe", PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous))
@@ -55,7 +60,7 @@ namespace Server
 
                     Guid clientId = Guid.NewGuid();
                     //Console.WriteLine("Id = " + clientId);
-                    Client client = new Client(clientId.ToString());
+                    Client client = new Client(clientId,this);
                     _clients.Add(client);
                     ++_idCounter;
 
