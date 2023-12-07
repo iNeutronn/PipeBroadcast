@@ -9,21 +9,20 @@ namespace Server.DataTranslators
 {
     internal class SharesTranslator : DataTranslator<TradingData>
     {
-        public SharesTranslator(CashedDataParser<TradingData> data, TimeSpan interval, List<Client> clients) :
-            base(data, interval, clients)
+        public SharesTranslator(CashedDataParser<TradingData> data, TimeSpan interval, Client client) :
+            base(data, interval, client)
         { }
 
         protected override void Translate(object state)
         {
             lock (_pipeLock)
             {
-                foreach (var client in _clients)
-                {
-                    if (client.IsSubscribedToShares)
+ 
+                    if (_client.IsSubscribedToShares)
                     {
-                        client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
+                        _client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
                     }
-                }
+  
             }
         }
     }

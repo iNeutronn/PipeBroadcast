@@ -16,12 +16,13 @@ namespace Server
         private bool _isSubscribedToWeather;
         private bool _isSubscribedToShares;
         private bool _isSubscribedToCurrency;
-        
 
         public bool IsSubscribedToWeather { get { return _isSubscribedToWeather; } }
         public bool IsSubscribedToShares  { get { return _isSubscribedToShares; } }
         public bool IsSubscribedToCurrency { get { return _isSubscribedToCurrency; } }
-        
+
+
+        public event EventHandler<string> ClientCommandReceived;
 
         public Client(Guid id, ClientManager manager)
         {
@@ -50,9 +51,18 @@ namespace Server
                     string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
                     if (!string.IsNullOrEmpty(receivedData))
+                    {
                         CommandProcessing(receivedData);
+
+                        OnClientCommandReceived(receivedData);
+                    }    
                 }
             });
+        }
+
+        private void OnClientCommandReceived(string receivedData)
+        {
+            ClientCommandReceived?.Invoke(this, receivedData);
         }
 
         private void CommandProcessing(string command)
@@ -61,8 +71,8 @@ namespace Server
             {
                 case "quit":
                     SendAnswer("OK");
-                    clientsmanager.RemoveClient(this);
-                    Dispose();
+                    //clientsmanager.RemoveClient(this);
+                    Dispose();     // Dispose не викличеться 2 рази патерн Dispose правильно написаний? 
                     break;
                 case "SubscribToShares":
                     _isSubscribedToShares = true;

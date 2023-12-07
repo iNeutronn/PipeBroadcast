@@ -9,21 +9,20 @@ namespace Server.DataTranslators
 {
     internal class CurrencyTranslator : DataTranslator<CurencyData>
     {
-        public CurrencyTranslator(CashedDataParser<CurencyData> data, TimeSpan interval, List<Client> clients) :
-            base(data, interval, clients)
+        public CurrencyTranslator(CashedDataParser<CurencyData> data, TimeSpan interval, Client client) :
+            base(data, interval, client)
         { }
 
         protected override void Translate(object state)
         {
             lock (_pipeLock)
             {
-                foreach (var client in _clients)
-                {
-                    if (client.IsSubscribedToCurrency)
+
+                    if (_client.IsSubscribedToCurrency)
                     {
-                        client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
+                        _client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
                     }
-                }
+               
             }
         }
     }

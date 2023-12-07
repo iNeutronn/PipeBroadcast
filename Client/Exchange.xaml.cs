@@ -14,9 +14,9 @@ using System.Windows.Shapes;
 
 namespace Client
 {
-    /// <summary>
-    /// Interaction logic for Exchange.xaml
-    /// </summary>
+
+
+
     public partial class Exchange : Window
     {
         public Exchange()
@@ -24,4 +24,6 @@ namespace Client
             InitializeComponent();
         }
     }
+
+
 }

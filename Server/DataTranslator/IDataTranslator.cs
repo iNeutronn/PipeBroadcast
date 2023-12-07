@@ -22,11 +22,11 @@ namespace Server
         protected TimeSpan _interval;
         protected CashedDataParser<T> _data;
         protected Timer _timer;
-        protected List<Client> _clients;
+        protected Client _client;
 
-        public DataTranslator(CashedDataParser<T> data, TimeSpan interval, List<Client> clients)
+        public DataTranslator(CashedDataParser<T> data, TimeSpan interval, Client client)
         {
-            _clients = clients;
+            _client = client;
             _data = data;
             _interval = interval;
             _timer = new Timer(Translate, null, Timeout.Infinite, Timeout.Infinite);
