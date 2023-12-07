@@ -1,34 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Pipes;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 
 namespace Client;
 
-internal class Client1 : IDisposable
+internal class ClientPipe : IDisposable
 {
     private Guid _id;
-    private string _host;
+    private readonly string _host; 
     private NamedPipeClientStream _pipeClient; 
     private bool disposedValue;
 
     public event EventHandler<string> ServerResponseReceived;
 
-    public Client1(string host)
+    public ClientPipe(string host)
     {
         _host = host;
     }
 
-    private void Connect()
+    public void Connect()
     {
         GetIdFromServer();
         string pipeName = "pipe" + _id.ToString();
         _pipeClient = new NamedPipeClientStream(_host, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
         _pipeClient.Connect();
+        Thread t = new(new ThreadStart(ListenServer));
+        t.IsBackground = true;
+        t.Name = $"pipe {_id} Lisener";
+        t.Start();
     }
 
 
@@ -40,12 +41,12 @@ internal class Client1 : IDisposable
         {
             pipeClient.Connect();
 
-            byte[] buffer = new byte[16];
-            pipeClient.Read(buffer, 0, 16);
+            byte[] buffer = new byte[36];
+            pipeClient.Read(buffer, 0, 36);
 
             pipeClient.Write(new byte[1], 0, 1);
 
-            _id = new Guid(buffer);
+            _id = new Guid(Encoding.UTF8.GetString(buffer));
         }
         catch (IOException ex)
         {
@@ -68,7 +69,7 @@ internal class Client1 : IDisposable
         _pipeClient.Write(data, 0, data.Length);
     }
 
-    public void ListenServer()
+    private void ListenServer()
     {
         byte[] buffer = new byte[256];
 
@@ -108,7 +109,7 @@ internal class Client1 : IDisposable
     }
 
     // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-    ~Client1()
+    ~ClientPipe()
     {
         // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         Dispose(disposing: false);

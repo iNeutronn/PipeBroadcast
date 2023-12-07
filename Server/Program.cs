@@ -3,9 +3,12 @@ using Server;
 using System.Runtime.ConstrainedExecution;
 
 
+ClientManager clients = new ClientManager();
 
-SharesTest();// no needed / can be changed to any other function
+while (true)
+{
 
+}
 
 void WheatherTest()
 {

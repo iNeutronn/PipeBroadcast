@@ -55,7 +55,8 @@ namespace Server
 
                     Guid clientId = Guid.NewGuid();
                     //Console.WriteLine("Id = " + clientId);
-                    _clients.Add(new Client(clientId.ToString()));
+                    Client client = new Client(clientId.ToString());
+                    _clients.Add(client);
                     ++_idCounter;
 
                     byte[] clientIdBytes = Encoding.UTF8.GetBytes(clientId.ToString());
@@ -63,11 +64,12 @@ namespace Server
                     //Console.WriteLine(clientIdBytes.Length);
 
                     idPipe.Write(clientIdBytes, 0, clientIdBytes.Length);
-                    _clients[^1].ListenClient();
+
                     //Console.WriteLine("IsWrite");
                     byte[] confirmation = new byte[1];
                     int bytesRead = await idPipe.ReadAsync(confirmation, 0, confirmation.Length);
                     Console.WriteLine(confirmation.ToString());
+                    client.ListenClient();
                     idPipe.Disconnect();
                 }
             }

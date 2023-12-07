@@ -23,14 +23,22 @@ namespace Client
     public partial class MainWindow : Window
     {
         private IPAddress _hostIP;
+        private ClientPipe _clientPipe;
         public MainWindow(IPAddress hostIP)
         {
             InitializeComponent();
             _hostIP = hostIP;
-            
+            _clientPipe = new ClientPipe(_hostIP.ToString() == "0.0.0.0" ? "." : _hostIP.ToString());
+            Task.Run(() => _clientPipe.Connect());
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+
+        }
+
+        private void WatherButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
