@@ -16,7 +16,7 @@
         <Border BorderThickness="3" BorderBrush="#FFCEC7CE" Background="White" Margin="20,10,20,20">
            
         </Border>
-        <Button Content="Sing Up" HorizontalAlignment="Center" Height="39" Margin="0,244,0,0" VerticalAlignment="Top" Width="124" Background="#FFE3CDF1" FontSize="14" FontFamily="Yu Gothic" FontWeight="Bold" Click="Button_Click"/>
+        <Button Content="Sign Up" HorizontalAlignment="Center" Height="39" Margin="0,244,0,0" VerticalAlignment="Top" Width="124" Background="#FFE3CDF1" FontSize="14" FontFamily="Yu Gothic" FontWeight="Bold" Click="Button_Click"/>
 
         <Label Content="SIGN UP" Margin="62,21,62,266" Background="White" FontWeight="Bold" FontSize="36"  RenderTransformOrigin="0.62,0.506"/>
 
