@@ -21,7 +21,7 @@ namespace Server.DataTranslators
                 {
                     if (client.IsSubscribedToShares)
                     {
-                        client.SendAnswer(JsonConvert.SerializeObject(_data.GetData()));
+                        client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
                     }
                 }
             }

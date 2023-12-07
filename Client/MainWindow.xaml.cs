@@ -40,7 +40,7 @@ namespace Client
 
         private void WatherButton_Click(object sender, RoutedEventArgs e)
         {
-
+            _clientPipe.SubscribeToWeather();
         }
     }
 }

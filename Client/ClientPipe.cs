@@ -12,6 +12,7 @@ internal class ClientPipe : IDisposable
     private readonly string _host; 
     private NamedPipeClientStream _pipeClient; 
     private bool disposedValue;
+    private Thread lisenServerThrerad;
 
     public event EventHandler<string> ServerResponseReceived;
 
@@ -20,16 +21,20 @@ internal class ClientPipe : IDisposable
         _host = host;
     }
 
+    public void SubscribeToWeather()
+    {
+        SendCommand("SubscribToWeather");
+    }
     public void Connect()
     {
         GetIdFromServer();
         string pipeName = "pipe" + _id.ToString();
         _pipeClient = new NamedPipeClientStream(_host, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
         _pipeClient.Connect();
-        Thread t = new(new ThreadStart(ListenServer));
-        t.IsBackground = true;
-        t.Name = $"pipe {_id} Lisener";
-        t.Start();
+        lisenServerThrerad = new(new ThreadStart(ListenServer));
+        lisenServerThrerad.IsBackground = true;
+        lisenServerThrerad.Name = $"pipe {_id} Lisener";
+        lisenServerThrerad.Start();
     }
 
 
@@ -60,18 +65,25 @@ internal class ClientPipe : IDisposable
 
     public void SendCommand(string command)
     {
+        while (_pipeClient == null || !_pipeClient.IsConnected)
+        {
+            Thread.Sleep(100);
+        }
         if (_pipeClient == null)
         {
             throw new InvalidOperationException("NamedPipeClientStream not initialized.");
         }    
+       
 
         byte[] data = Encoding.UTF8.GetBytes(command);
         _pipeClient.Write(data, 0, data.Length);
+
+       
     }
 
     private void ListenServer()
     {
-        byte[] buffer = new byte[256];
+        byte[] buffer = new byte[4096];
 
         while (true)
         {
@@ -80,6 +92,15 @@ internal class ClientPipe : IDisposable
             if (bytesRead > 0)
             {
                 string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+               if (receivedData == "OK")
+                {
+                    continue;
+                }
+               else
+               if (receivedData == "ERR")
+                {
+                    throw new Exception("Server error");
+                }
                 // Handle received data from the server as needed
                 OnServerResponseReceived(receivedData);
             }
@@ -98,8 +119,10 @@ internal class ClientPipe : IDisposable
         {
             if (disposing)
             {
+                SendCommand("quit");
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
+
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer
