@@ -9,12 +9,27 @@ using System.Threading;
 
 namespace Client;
 
+//enum Subscription
+//{
+//    Weather,
+//    Shares,
+//    Currency,
+//}
+
+
 internal class Client1 : IDisposable
 {
     private Guid _id;
     private string _host;
-    private NamedPipeClientStream _pipeClient; 
+    private NamedPipeClientStream _pipeClient;
+    private Task _serverResponses;
     private bool disposedValue;
+
+    private bool _isSubscribedToWeather = false;
+    private bool _isSubscribedToShares = false;
+    private bool _isSubscribedToCurrency = false;
+
+
 
     public event EventHandler<string> ServerResponseReceived;
 
@@ -23,12 +38,13 @@ internal class Client1 : IDisposable
         _host = host;
     }
 
-    private void Connect()
+    public void Connect()
     {
         GetIdFromServer();
         string pipeName = "pipe" + _id.ToString();
         _pipeClient = new NamedPipeClientStream(_host, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
         _pipeClient.Connect();
+        ListenServer();
     }
 
 
@@ -70,25 +86,51 @@ internal class Client1 : IDisposable
 
     public void ListenServer()
     {
-        byte[] buffer = new byte[256];
-
-        while (true)
+        _serverResponses = Task.Run(() => 
         {
-            int bytesRead = _pipeClient.Read(buffer, 0, buffer.Length);
-
-            if (bytesRead > 0)
+            if(_pipeClient == null)
             {
-                string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                // Handle received data from the server as needed
-                OnServerResponseReceived(receivedData);
+                throw new InvalidOperationException("NamedPipeClientStream not initialized.");
             }
-        }
+
+            byte[] buffer = new byte[100000];
+
+            while (true)
+            {
+                int bytesRead = _pipeClient.Read(buffer, 0, buffer.Length);
+
+                if (bytesRead > 0)
+                {
+                    string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    // Handle received data from the server as needed
+                    OnServerResponseReceived(receivedData);
+                }
+            }
+        });  
     }
 
     protected virtual void OnServerResponseReceived(string response)
     {
         ServerResponseReceived?.Invoke(this, response);
     }
+
+
+    //public void Subscribe(Subscription subscription)
+    //{
+    //    switch (subscription)
+    //    {
+    //        case Subscription.Currency:
+
+    //            break;
+
+    //        case Subscription.Weather: 
+    //            break;
+
+    //        case Subscription.Shares:
+    //            break;
+    //    }
+
+    //}
 
 
     protected virtual void Dispose(bool disposing)
@@ -99,6 +141,7 @@ internal class Client1 : IDisposable
             {
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
+                _serverResponses?.Dispose();
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer

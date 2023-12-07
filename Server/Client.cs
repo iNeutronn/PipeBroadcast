@@ -32,12 +32,12 @@ namespace Server
 
         public void ListenClient() 
         {
-            _pipeServer.WaitForConnection();
-            if (_pipeServer == null)
-                throw new InvalidOperationException("NamedPipeServerStream not initialized.");
-            
             _clientCommands = Task.Run(async () =>
             {
+                _pipeServer.WaitForConnection();
+                if (_pipeServer == null)
+                    throw new InvalidOperationException("NamedPipeServerStream not initialized.");
+
                 byte[] buffer = new byte[256]; 
 
                 while (true)

@@ -67,23 +67,23 @@
                 <TextBlock Grid.Column="2" Background="LightGray" Text="Exchange Rate" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontFamily="Cascadia Mono" Height="20" Width="122"/>
 
                 <Border Grid.Row="1" Grid.Column="0" Background="White">
-                    <Image Source="/завантаження12.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="41" Width="54" />
+                    <Image Source="/Images/завантаження12.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="41" Width="54" />
                 </Border>
 
                 <Border Grid.Row="2" Grid.Column="0" Background="White">
-                    <Image Source="/завантаження (1).jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="41" Width="57" />
+                    <Image Source="/Images/завантаження (1).jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="41" Width="57" />
                 </Border>
 
                 <Border Grid.Row="3" Grid.Column="0" Background="White">
-                    <Image Source="/flag-velikobritanii-union-jack.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="44" Width="49" />
+                    <Image Source="/Images/flag-velikobritanii-union-jack.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="44" Width="49" />
                 </Border>
 
                 <Border Grid.Row="4" Grid.Column="0" Background="White">
-                    <Image Source="/завантаження (1).png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="46" Width="52" />
+                    <Image Source="/Images/завантаження (1).png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="46" Width="52" />
                 </Border>
 
                 <Border Grid.Row="5" Grid.Column="0" Background="White">
-                    <Image Source="/flag-shvetsii_b11.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="40" Width="51" />
+                    <Image Source="/Images/flag-shvetsii_b11.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="40" Width="51" />
                 </Border>
 
 

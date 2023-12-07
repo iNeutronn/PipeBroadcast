@@ -25,9 +25,9 @@ namespace Server
             _idThread = Task.Run(() => idThreadWork());
             _translators = new IDataTranslator[]
             {
-               new SharesTranslator(new SharesDataParser(), new TimeSpan(0,1,0) , _clients),
-               new CurrencyTranslator(new CurencyDataParser(), new TimeSpan(0,3,0) , _clients),
-               new WetherTranslator(new WeatherDataParser(), new TimeSpan(0,5,0) , _clients)
+               new SharesTranslator(new SharesDataParser(), new TimeSpan(0,0,10) , _clients),
+               new CurrencyTranslator(new CurencyDataParser(), new TimeSpan(0,1,0) , _clients),
+               new WetherTranslator(new WeatherDataParser(), new TimeSpan(0,1,0) , _clients)
             };
 
             foreach(var translator in _translators)
@@ -46,7 +46,7 @@ namespace Server
 
         private async Task idThreadWork()
         {
-            using (NamedPipeServerStream idPipe = new NamedPipeServerStream("idPipe", PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous))
+            using (NamedPipeServerStream idPipe = new NamedPipeServerStream("idPipe", PipeDirection.InOut, 10, PipeTransmissionMode.Message, PipeOptions.Asynchronous))
             {
                 while (_isRunning)
                 {
@@ -58,16 +58,23 @@ namespace Server
                     _clients.Add(new Client(clientId.ToString()));
                     ++_idCounter;
 
-                    byte[] clientIdBytes = Encoding.UTF8.GetBytes(clientId.ToString());
+                    byte[] clientIdBytes = clientId.ToByteArray();
                     //Console.WriteLine(clientIdBytes);
                     //Console.WriteLine(clientIdBytes.Length);
 
                     idPipe.Write(clientIdBytes, 0, clientIdBytes.Length);
-                    _clients[^1].ListenClient();
+
+                   
+
+
                     //Console.WriteLine("IsWrite");
                     byte[] confirmation = new byte[1];
-                    int bytesRead = await idPipe.ReadAsync(confirmation, 0, confirmation.Length);
+                   // int bytesRead = await idPipe.ReadAsync(confirmation, 0, confirmation.Length);
+                    idPipe.Read(confirmation, 0, confirmation.Length);
                     Console.WriteLine(confirmation.ToString());
+
+                    _clients[^1].ListenClient();
+
                     idPipe.Disconnect();
                 }
             }
