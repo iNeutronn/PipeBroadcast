@@ -10,7 +10,8 @@ namespace Server
     internal class Client : IDisposable
     {
         public NamedPipeServerStream _pipeServer { get; }
-        private int _id;
+        private ClientManager clientsmanager;
+        private Guid _id;
         private Task _clientCommands;
         private bool _isSubscribedToWeather;
         private bool _isSubscribedToShares;
@@ -22,12 +23,14 @@ namespace Server
         public bool IsSubscribedToCurrency { get { return _isSubscribedToCurrency; } }
         
 
-        public Client(string id)
+        public Client(Guid id, ClientManager manager)
         {
             _isSubscribedToWeather = false;
             _isSubscribedToShares = false;
             _isSubscribedToCurrency = false;
-            _pipeServer = new NamedPipeServerStream("pipe" + id, PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+            clientsmanager = manager;
+            _id = id;
+            _pipeServer = new NamedPipeServerStream("pipe" + _id.ToString(), PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
         }
 
         public void ListenClient() 
@@ -58,6 +61,7 @@ namespace Server
             {
                 case "quit":
                     SendAnswer("OK");
+                    clientsmanager.RemoveClient(this);
                     Dispose();
                     break;
                 case "SubscribToShares":

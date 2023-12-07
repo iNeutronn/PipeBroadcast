@@ -55,5 +55,19 @@ namespace Client
             client.SendCommand("UnSubscribToShares");
             client.SendCommand("quit");
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow mainWindow = new MainWindow(IPAddress.Parse(hostIp.Text));
+                mainWindow.Show();
+                this.Close();
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Invalid IP Address");
+            }
+        }
     }
 }

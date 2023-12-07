@@ -19,7 +19,7 @@ namespace Server.DataTranslators
                 {
                     if (client.IsSubscribedToWeather)
                     {
-                        client.SendAnswer(JsonConvert.SerializeObject(_data.GetData()));
+                        client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(),Formatting.Indented));
                     }
                 }
             }

@@ -21,7 +21,7 @@ namespace Server.DataTranslators
                 {
                     if (client.IsSubscribedToCurrency)
                     {
-                        client.SendAnswer(JsonConvert.SerializeObject(_data.GetData()));
+                        client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
                     }
                 }
             }

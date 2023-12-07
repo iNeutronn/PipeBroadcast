@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Pipes;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 
 namespace Client;
 
-//enum Subscription
-//{
-//    Weather,
-//    Shares,
-//    Currency,
-//}
 
 
 internal class Client1 : IDisposable
@@ -24,6 +15,7 @@ internal class Client1 : IDisposable
     private NamedPipeClientStream _pipeClient;
     private Task _serverResponses;
     private bool disposedValue;
+    private Thread lisenServerThrerad;
 
     private bool _isSubscribedToWeather = false;
     private bool _isSubscribedToShares = false;
@@ -33,11 +25,15 @@ internal class Client1 : IDisposable
 
     public event EventHandler<string> ServerResponseReceived;
 
-    public Client1(string host)
+    public ClientPipe(string host)
     {
         _host = host;
     }
 
+    public void Connect()
+    {
+        SendCommand("SubscribToWeather");
+    }
     public void Connect()
     {
         GetIdFromServer();
@@ -75,16 +71,23 @@ internal class Client1 : IDisposable
 
     public void SendCommand(string command)
     {
+        while (_pipeClient == null || !_pipeClient.IsConnected)
+        {
+            Thread.Sleep(100);
+        }
         if (_pipeClient == null)
         {
             throw new InvalidOperationException("NamedPipeClientStream not initialized.");
         }    
+       
 
         byte[] data = Encoding.UTF8.GetBytes(command);
         _pipeClient.Write(data, 0, data.Length);
+
+       
     }
 
-    public void ListenServer()
+    private void ListenServer()
     {
         _serverResponses = Task.Run(() => 
         {
@@ -115,22 +118,7 @@ internal class Client1 : IDisposable
     }
 
 
-    //public void Subscribe(Subscription subscription)
-    //{
-    //    switch (subscription)
-    //    {
-    //        case Subscription.Currency:
-
-    //            break;
-
-    //        case Subscription.Weather: 
-    //            break;
-
-    //        case Subscription.Shares:
-    //            break;
-    //    }
-
-    //}
+  
 
 
     protected virtual void Dispose(bool disposing)
@@ -139,6 +127,7 @@ internal class Client1 : IDisposable
         {
             if (disposing)
             {
+                SendCommand("quit");
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
                 _serverResponses?.Dispose();
@@ -151,7 +140,7 @@ internal class Client1 : IDisposable
     }
 
     // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-    ~Client1()
+    ~ClientPipe()
     {
         // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         Dispose(disposing: false);
