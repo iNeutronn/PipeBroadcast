@@ -6,6 +6,7 @@ using Server.DataParsing;
 using Server.DataParsing.DataObjects.Curency;
 using Server.DataParsing.DataObjects.Shares;
 using Server.DataParsing.DataObjects.Weather;
+using Server.DataTranslator;
 using Server.DataTranslators;
 
 namespace Server
@@ -72,8 +73,8 @@ namespace Server
             _clients.Add(client);
             _clientTranslators[client] = new IDataTranslator[]
             {
-                new SharesTranslator(new SharesDataParser(), TimeSpan.FromSeconds(100000) , client),
-                new CurrencyTranslator(new CurencyDataParser(), new TimeSpan(0,3,0) , client),
+                new SharesTranslator(new SharesDataParser(), TimeSpan.FromSeconds(10) , client),
+                new CurrencyTranslator(new CurencyDataParser(), new TimeSpan(0,0,10) , client),
                 new WetherTranslator(new WeatherDataParser(), TimeSpan.FromSeconds(10) , client)
             };
         }

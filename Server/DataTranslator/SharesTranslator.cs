@@ -5,11 +5,11 @@ using Server.DataParsing.DataObjects.Weather;
 using System.Text;
 using Server.DataParsing.DataObjects.Shares;
 
-namespace Server.DataTranslators
+namespace Server.DataTranslator
 {
     internal class SharesTranslator : DataTranslator<TradingData>
     {
-        public SharesTranslator(CashedDataParser<TradingData> data, TimeSpan interval, Client client) :
+        public SharesTranslator(ICashedDataParser<TradingData> data, TimeSpan interval, Client client) :
             base(data, interval, client)
         { }
 
@@ -17,12 +17,12 @@ namespace Server.DataTranslators
         {
             lock (_pipeLock)
             {
- 
-                    if (_client.IsSubscribedToShares)
-                    {
-                        _client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
-                    }
-  
+
+                if (_client.IsSubscribedToShares)
+                {
+                    _client.SendAnswer(JsonConvert.SerializeObject(_data.GetDataFromSource(), Formatting.Indented));
+                }
+
             }
         }
     }

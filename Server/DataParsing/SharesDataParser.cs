@@ -3,7 +3,7 @@ using System.Net;
 
 namespace Server.DataParsing
 {
-    internal class SharesDataParser : CashedDataParser<TradingData>
+    internal class SharesDataParser : ICashedDataParser<TradingData>, IDisposable
     {
         public static readonly TimeSpan DefoultTimeOut = TimeSpan.FromMinutes(1);
         private static readonly string _apikey = "W5JXT814B7SZ3MGZ";
@@ -12,11 +12,16 @@ namespace Server.DataParsing
         private static readonly string _interval = "1min";
         private WebClient _webClient = new WebClient();
 
-        public SharesDataParser(TimeSpan? timeOut = null) : base(timeOut?? DefoultTimeOut)
+        //public SharesDataParser(TimeSpan? timeOut = null) : base(timeOut?? DefoultTimeOut)
+        //{
+        //}
+
+        public void Dispose()
         {
+            ((IDisposable)_webClient).Dispose();
         }
 
-        protected override TradingData GetDataFromSource()
+        public TradingData GetDataFromSource()
         {
             string QUERY_URL = $"https://www.alphavantage.co/query?function={_function}&symbol={_symbol}&interval={_interval}&apikey={_apikey}";
             string json = _webClient.DownloadString(QUERY_URL);

@@ -4,12 +4,18 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Threading;
+using Microsoft.Win32.SafeHandles;
+using System.Runtime.Versioning;
 
 namespace Client;
 
 
 
-internal class ClientPipe : IDisposable
+public class ClientPipe : IDisposable
 {
     private Guid _id;
     private string _host;

@@ -45,6 +45,10 @@ namespace Client
         private void CurrencyButton_Click(object sender, RoutedEventArgs e)
         {
             _clientPipe.SubscribeToCurrency();
+
+            Exchange exchange = new Exchange(_clientPipe);
+
+            exchange.Show();
         }
 
 

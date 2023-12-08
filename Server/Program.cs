@@ -10,6 +10,7 @@ Console.ReadLine();
 //SharesTest();// no needed / can be changed to any other function
 
 
+
 //void WheatherTest()
 //{
 //    WeatherDataParser parser = new WeatherDataParser(TimeSpan.FromMinutes(5));
@@ -25,7 +26,7 @@ Console.ReadLine();
 //}
 //void SharesTest()
 //{
-//    SharesDataParser parser = new SharesDataParser(TimeSpan.FromMinutes(5));
+//    SharesDataParser parser = new SharesDataParser(TimeSpan.FromSeconds(10));
 //    var data = parser.GetData();
 //    Console.WriteLine(data);
 //}

@@ -3,7 +3,7 @@
 namespace Server.DataParsing.DataObjects.Curency
 {
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-    internal class CurencyRate
+    public class CurencyRate
     {
         [JsonProperty("r030")]
         public int Id { get; set; }
