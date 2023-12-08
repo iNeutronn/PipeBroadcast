@@ -51,6 +51,5 @@ namespace Client
             exchange.Show();
         }
 
-
     }
 }

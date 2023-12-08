@@ -8,7 +8,7 @@ namespace Server.DataTranslators
 {
     internal class WetherTranslator : DataTranslator<WhetherForecast>
     {
-        public WetherTranslator(ICashedDataParser<WhetherForecast> data, TimeSpan interval, Client client) :
+        public WetherTranslator(CashedDataParser<WhetherForecast> data, TimeSpan interval, Client client) :
             base(data, interval, client){ }
 
         protected override void Translate(object state)
@@ -18,7 +18,7 @@ namespace Server.DataTranslators
                 
                     if (_client.IsSubscribedToWeather)
                     {
-                        _client.SendAnswer(JsonConvert.SerializeObject(_data.GetDataFromSource(),Formatting.Indented));
+                        _client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(),Formatting.Indented));
                     }
                 
             }

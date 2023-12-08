@@ -9,7 +9,7 @@ namespace Server.DataTranslators
 {
     internal class CurrencyTranslator : DataTranslator<CurencyData>
     {
-        public CurrencyTranslator(ICashedDataParser<CurencyData> data, TimeSpan interval, Client client) :
+        public CurrencyTranslator(CashedDataParser<CurencyData> data, TimeSpan interval, Client client) :
             base(data, interval, client)
         { }
 
@@ -20,7 +20,7 @@ namespace Server.DataTranslators
 
                     if (_client.IsSubscribedToCurrency)
                     {
-                        _client.SendAnswer(JsonConvert.SerializeObject(_data.GetDataFromSource(), Formatting.Indented));
+                        _client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
                     }
                
             }

@@ -73,9 +73,9 @@ namespace Server
             _clients.Add(client);
             _clientTranslators[client] = new IDataTranslator[]
             {
-                new SharesTranslator(new SharesDataParser(), TimeSpan.FromSeconds(10) , client),
-                new CurrencyTranslator(new CurencyDataParser(), new TimeSpan(0,0,10) , client),
-                new WetherTranslator(new WeatherDataParser(), TimeSpan.FromSeconds(10) , client)
+                new SharesTranslator(new SharesDataParser(TimeSpan.FromSeconds(1)), TimeSpan.FromSeconds(10) , client),
+                new CurrencyTranslator(new CurencyDataParser(TimeSpan.FromSeconds(1)), TimeSpan.FromSeconds(10) , client),
+                new WetherTranslator(new WeatherDataParser(TimeSpan.FromSeconds(1)), TimeSpan.FromSeconds(10) , client)
             };
         }
 

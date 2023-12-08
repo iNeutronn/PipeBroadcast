@@ -9,7 +9,7 @@ namespace Server.DataTranslator
 {
     internal class SharesTranslator : DataTranslator<TradingData>
     {
-        public SharesTranslator(ICashedDataParser<TradingData> data, TimeSpan interval, Client client) :
+        public SharesTranslator(CashedDataParser<TradingData> data, TimeSpan interval, Client client) :
             base(data, interval, client)
         { }
 
@@ -20,7 +20,7 @@ namespace Server.DataTranslator
 
                 if (_client.IsSubscribedToShares)
                 {
-                    _client.SendAnswer(JsonConvert.SerializeObject(_data.GetDataFromSource(), Formatting.Indented));
+                    _client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
                 }
 
             }
