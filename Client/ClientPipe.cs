@@ -24,6 +24,13 @@ public class ClientPipe : IDisposable
     private bool disposedValue;
     private Thread listenServerThrerad;
 
+    private bool _isSubscribedToWeather = false;
+    private bool _isSubscribedToShares = false;
+    private bool _isSubscribedToCurrency = false;
+
+    public bool IsSubscribedToWeather  => _isSubscribedToWeather;
+    public bool IsSubscribedToShares => _isSubscribedToShares;
+    public bool IsSubscribedToCurrency => _isSubscribedToCurrency;
 
     public event EventHandler<string> ServerResponseReceived;
 
@@ -119,31 +126,37 @@ public class ClientPipe : IDisposable
     public void SubscribeToWeather()
     {
         SendCommand("SubscribToWeather");
+        _isSubscribedToWeather = true;
     }
 
     public void SubscribeToShares()
     {
         SendCommand("SubscribToShares");
+        _isSubscribedToShares = true;
     }
 
     public void SubscribeToCurrency()
     {
         SendCommand("SubscribToCurrency");
+        _isSubscribedToCurrency = true;
     }
 
     public void UnSubscribeToWeather()
     {
         SendCommand("UnSubscribToWeather");
+        _isSubscribedToWeather = false;
     }
 
     public void UnSubscribeToShares()
     {
         SendCommand("UnSubscribToShares");
+        _isSubscribedToShares = false;
     }
 
-    public void unSubscribeToCurrency()
+    public void UnSubscribeToCurrency()
     {
         SendCommand("UnSubscribToCurrency");
+        _isSubscribedToCurrency = false;
     }
 
     #endregion

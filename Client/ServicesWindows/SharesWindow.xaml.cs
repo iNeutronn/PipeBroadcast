@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Server.DataParsing.DataObjects.Shares;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Server.DataParsing.DataObjects.Curency;
 
 namespace Client
 {
@@ -23,8 +24,8 @@ namespace Client
     /// </summary>
     public partial class SharesWindow : Window
     {
-        TradingData _tradingData;
-        ClientPipe _client;
+        private TradingData _tradingData;
+        private ClientPipe _client;
 
         public SharesWindow(ClientPipe client)
         {
@@ -35,8 +36,27 @@ namespace Client
 
         private void _client_ServerResponseReceived(object? sender, string e)
         {
-            Debug.WriteLine("message");
-            _tradingData = JsonConvert.DeserializeObject<TradingData>(e);
+            try
+            {
+                var tradingData = JsonConvert.DeserializeObject<TradingData>(e);
+
+                if (tradingData != null)
+                {
+                    _tradingData = tradingData;
+                }
+            }
+            catch (JsonException ex)
+            {
+                Debug.WriteLine($"Error deserializing JSON: {ex.Message}");
+                // Handle the error as needed
+            }
+        }
+
+        private void Unsubscribe_Click(object sender, RoutedEventArgs e)
+        {
+            _client.UnSubscribeToShares();
+            _client.ServerResponseReceived -= _client_ServerResponseReceived;
+            Close();
         }
     }
 }

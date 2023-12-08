@@ -72,7 +72,7 @@ namespace Server
                 case "quit":
                     SendAnswer("OK");
                     //clientsmanager.RemoveClient(this);
-                    Dispose();     // Dispose не викличеться 2 рази патерн Dispose правильно написаний? 
+                    Dispose();     
                     break;
                 case "SubscribToShares":
                     _isSubscribedToShares = true;

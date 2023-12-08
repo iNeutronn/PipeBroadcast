@@ -23,8 +23,9 @@ namespace Client
     /// </summary>
     public partial class WeatherWindow : Window
     {
-        WeatherForecast _weatherForecast;
-        ClientPipe _client;
+        private WhetherForecast _weatherData;
+        private ClientPipe _client;
+
         public WeatherWindow(ClientPipe client)
         {
             InitializeComponent();
@@ -34,8 +35,27 @@ namespace Client
 
         private void _client_ServerResponseReceived(object? sender, string e)
         {
-            Debug.WriteLine("message");
-            _weatherForecast = JsonConvert.DeserializeObject<WeatherForecast>(e);
+            try
+            {
+                var weatherData = JsonConvert.DeserializeObject<WhetherForecast>(e);
+
+                if (weatherData != null)
+                {
+                    _weatherData = weatherData;
+                }
+            }
+            catch (JsonException ex)
+            {
+                Debug.WriteLine($"Error deserializing JSON: {ex.Message}");
+                // Handle the error as needed
+            }
+        }
+
+        private void Unsubscribe_Click(object sender, RoutedEventArgs e)
+        {
+            _client.UnSubscribeToWeather();
+            _client.ServerResponseReceived -= _client_ServerResponseReceived;
+            Close();
         }
     }
 }

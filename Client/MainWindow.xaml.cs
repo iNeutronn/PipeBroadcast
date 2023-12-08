@@ -34,19 +34,33 @@ namespace Client
 
         private void WatherButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_clientPipe.IsSubscribedToWeather) return;
+
             _clientPipe.SubscribeToWeather();
+
+            WeatherWindow weatherWindow = new WeatherWindow(_clientPipe);
+
+            weatherWindow.Show();
         }
 
         private void SharesButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_clientPipe.IsSubscribedToShares) return;
+
             _clientPipe.SubscribeToShares();
+
+            SharesWindow sharesWindow = new SharesWindow(_clientPipe);
+
+            sharesWindow.Show();
         }
 
         private void CurrencyButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_clientPipe.IsSubscribedToCurrency) return;
+
             _clientPipe.SubscribeToCurrency();
 
-            Exchange exchange = new Exchange(_clientPipe);
+            ExchangeWindow exchange = new ExchangeWindow(_clientPipe);
 
             exchange.Show();
         }

@@ -4,6 +4,7 @@ using Server.DataParsing;
 using Server.DataParsing.DataObjects.Weather;
 using System.Text;
 using Server.DataParsing.DataObjects.Shares;
+using System.Net;
 
 namespace Server.DataTranslator
 {
@@ -17,12 +18,18 @@ namespace Server.DataTranslator
         {
             lock (_pipeLock)
             {
-
                 if (_client.IsSubscribedToShares)
                 {
-                    _client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
+                    try
+                    {
+                        TradingData tradingData = _data.GetData();
+                        _client.SendAnswer(JsonConvert.SerializeObject(tradingData, Formatting.Indented));
+                    }
+                    catch(WebException ex)
+                    {
+                        _client.SendAnswer("you have problems with Internet.");    
+                    }
                 }
-
             }
         }
     }
