@@ -16,7 +16,7 @@ namespace Server.DataTranslators
 
         protected override void Translate(object state)
         {
-            lock (_pipeLock)
+            lock (_client)
             {
                 if (_client.IsSubscribedToShares)
                 {
