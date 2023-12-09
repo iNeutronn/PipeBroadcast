@@ -5,8 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="WeatherWindow" Height="664" Width="596">
-    <Grid Margin="0,0,0,-6">
+        Title="WeatherWindow" Height="574" Width="425" ResizeMode="NoResize">
 
-    </Grid>
+
+    <Border Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5" >
+        <Border.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform AngleX="-0.217"/>
+                <RotateTransform/>
+                <TranslateTransform X="-1.063"/>
+            </TransformGroup>
+        </Border.RenderTransform>
+        <Grid Height="574" VerticalAlignment="Top" Margin="3,0,-3,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="160*"/>
+                <RowDefinition Height="207*"/>
+                <RowDefinition Height="64*"/>
+                <RowDefinition Height="19*"/>
+                <RowDefinition Height="140*"/>
+            </Grid.RowDefinitions>
+            <Image HorizontalAlignment="Left" Height="132" VerticalAlignment="Center" Width="425" Source="/ServicesWindows/lviv_sunrises_and_sunsets.jpg" Margin="-5,0,0,0"/>
+
+
+
+
+
+            <Button Content="day1" HorizontalAlignment="Left" Height="58" Margin="11,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold">
+                <Button.Background>
+                    <SolidColorBrush Color="White" />
+                </Button.Background>
+            </Button>
+
+
+
+
+            <Button Content="day2" HorizontalAlignment="Left" Height="58" Margin="91,89,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold">
+                <Button.Background>
+                    <SolidColorBrush Color="White" />
+                </Button.Background>
+            </Button>
+
+            <Button Content="day3" HorizontalAlignment="Left" Height="58" Margin="172,89,0,0" VerticalAlignment="Top" Width="64" FontSize="20" FontWeight="Bold">
+                <Button.Background>
+                    <SolidColorBrush Color="White" />
+                </Button.Background>
+            </Button>
+
+            <Button Content="day4" HorizontalAlignment="Left" Height="58" Margin="253,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold">
+                <Button.Background>
+                    <SolidColorBrush Color="White" />
+                </Button.Background>
+            </Button>
+
+            <Button Content="day5" HorizontalAlignment="Left" Height="58" Margin="333,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold">
+                <Button.Background>
+                    <SolidColorBrush Color="White" />
+                </Button.Background>
+            </Button>
+            <Image HorizontalAlignment="Left" Height="128" Margin="10,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="137" Source="/ServicesWindows/claudy.png"/>
+            <Label Content="Lviv, Ukraine" HorizontalAlignment="Left" Margin="148,38,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="36" Height="58" Width="206"/>
+            <Label Content="-4°C" HorizontalAlignment="Left" Margin="28,96,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Height="64" Width="88"/>
+            <Image HorizontalAlignment="Left" Height="50" Margin="24,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="51" Source="/ServicesWindows/water_icon_251896.png"/>
+            <Label Content="Humidity" HorizontalAlignment="Left" Margin="24,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Height="30" Width="75"/>
+            <Label Content="Wind Speed" HorizontalAlignment="Left" Margin="200,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Height="30" Width="96"/>
+            <Image HorizontalAlignment="Left" Height="76" Margin="202,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="86" Source="/ServicesWindows/wind-weather-lines-group-symbol_icon-icons.com_54629.png"/>
+            <Label Content="27%" HorizontalAlignment="Left" Margin="85,0,0,0" Grid.Row="2" VerticalAlignment="Center" FontSize="20" Height="38" Width="48"/>
+            <Label Content="8.45 km/h" HorizontalAlignment="Left" Margin="285,0,0,0" Grid.Row="2" VerticalAlignment="Center" FontSize="20" Height="38" Width="98"/>
+            <Button Content="Unsubscribe" HorizontalAlignment="Left" Height="40" Margin="108,30,0,0" VerticalAlignment="Top" Width="190" Background="#FFAF9AC9" FontSize="18" Click="Unsubscribe_Click" Grid.Row="4"/>
+
+
+
+
+
+        </Grid>
+    </Border>
 </Window>
