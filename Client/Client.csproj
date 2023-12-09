@@ -19,6 +19,11 @@
     <None Remove="kisspng-computer-icons-stock-saving-5af9872e04ab00.4562394215263025100191.jpg" />
     <None Remove="kisspng-port-city-collision-currency-computer-icons-exchan-5ae07b9fdc7ed3.4767394215246611519032.jpg" />
     <None Remove="png-transparent-analytics-chart-growth-increasing-stocks-business-success-icon.png" />
+    <None Remove="ServicesWindows\claudy.png" />
+    <None Remove="ServicesWindows\lviv_sunrises_and_sunsets.jpg" />
+    <None Remove="ServicesWindows\snow.png" />
+    <None Remove="ServicesWindows\water_icon_251896.png" />
+    <None Remove="ServicesWindows\wind-weather-lines-group-symbol_icon-icons.com_54629.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +47,11 @@
     <Resource Include="Images\kisspng-computer-icons-stock-saving-5af9872e04ab00.4562394215263025100191.jpg" />
     <Resource Include="Images\kisspng-port-city-collision-currency-computer-icons-exchan-5ae07b9fdc7ed3.4767394215246611519032.jpg" />
     <Resource Include="Images\png-transparent-analytics-chart-growth-increasing-stocks-business-success-icon.png" />
+    <Resource Include="ServicesWindows\claudy.png" />
+    <Resource Include="ServicesWindows\lviv_sunrises_and_sunsets.jpg" />
+    <Resource Include="ServicesWindows\snow.png" />
+    <Resource Include="ServicesWindows\water_icon_251896.png" />
+    <Resource Include="ServicesWindows\wind-weather-lines-group-symbol_icon-icons.com_54629.png" />
   </ItemGroup>
 
 </Project>
