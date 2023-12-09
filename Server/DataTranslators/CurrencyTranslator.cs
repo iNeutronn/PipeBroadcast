@@ -4,6 +4,7 @@ using Server.DataParsing;
 using Server.DataParsing.DataObjects.Shares;
 using System.Text;
 using Server.DataParsing.DataObjects.Curency;
+using System.Net;
 
 namespace Server.DataTranslators
 {
@@ -18,19 +19,30 @@ namespace Server.DataTranslators
             lock (_client)
             {
 
-                    if (_client.IsSubscribedToCurrency)
+                if (_client.IsSubscribedToCurrency)
+                {
+                    TransitionObject transitionObject;
+                    try
                     {
-                    _client.SendAnswer(
-
-                            new TransitionObject()
-                            {
+                        transitionObject = new TransitionObject()
+                        {
                             Data = JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented),
                             Header = "CurrencyData"
-                        }
-                        
-                        );
+                        };
+                       
                     }
-               
+                    catch (WebException ex)
+                    {
+                        transitionObject = new TransitionObject()
+                        {
+                            Data = ex.Message,
+                            Header = "Exception"
+                        };
+                    }
+                    
+                    _client.SendAnswer(transitionObject);
+                }
+
             }
         }
     }

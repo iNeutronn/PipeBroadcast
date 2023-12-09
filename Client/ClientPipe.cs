@@ -28,12 +28,13 @@ public class ClientPipe : IDisposable
     public bool IsSubscribedToShares => _isSubscribedToShares;
     public bool IsSubscribedToCurrency => _isSubscribedToCurrency;
 
-   
+
 
 
     public event EventHandler<string> OnSharesRecived;
     public event EventHandler<string> OnWeatherRecived;
     public event EventHandler<string> OnCurrencyRecived;
+    public event EventHandler<string> OnExceptionRecived;
 
     public ClientPipe(string host)
     {
@@ -97,52 +98,61 @@ public class ClientPipe : IDisposable
 
     private void ListenServer()
     {
-        _serverResponses = Task.Run(() =>
+
+        if (_pipeClient == null)
         {
-            if (_pipeClient == null)
+            throw new InvalidOperationException("NamedPipeClientStream not initialized.");
+        }
+
+        byte[] buffer = new byte[100000];
+
+        while (true)
+        {
+            int bytesRead;
+            try
             {
-                throw new InvalidOperationException("NamedPipeClientStream not initialized.");
+                bytesRead = _pipeClient.Read(buffer, 0, buffer.Length);
+            }
+            catch (ObjectDisposedException ex)
+            {
+                break; 
             }
 
-            byte[] buffer = new byte[100000];
-
-            while (true)
+            if (bytesRead > 0)
             {
-                int bytesRead = _pipeClient.Read(buffer, 0, buffer.Length);
+                string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-                if (bytesRead > 0)
+                TransitionObject transitionObject = JsonConvert.DeserializeObject<TransitionObject>(receivedData!)!;
+                switch (transitionObject.Header)
                 {
-                    string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-
-                    TransitionObject transitionObject = JsonConvert.DeserializeObject<TransitionObject>(receivedData!)!;
-                    switch (transitionObject.Header)
-                    {
-                        case "SharesData":
-                            OnCurrencyRecived?.Invoke(this, transitionObject.Data);
-                            break;
-                        case "WeatherData":
-                            OnWeatherRecived?.Invoke(this, transitionObject.Data);
-                            break;
-                        case "CurrencyData":
-                            OnSharesRecived?.Invoke(this, transitionObject.Data);
-                            break;
-                        case
-                            "ServisData":
-                            ProcessServiceData(transitionObject.Data);
-                            break;
-                        default:
-                            throw new InvalidOperationException("Unknown header of revived record");
-                    }
-                   
-                    
+                    case "SharesData":
+                        OnSharesRecived?.Invoke(this, transitionObject.Data);
+                        break;
+                    case "WeatherData":
+                        OnWeatherRecived?.Invoke(this, transitionObject.Data);
+                        break;
+                    case "CurrencyData":
+                        OnCurrencyRecived?.Invoke(this, transitionObject.Data);
+                        break;
+                    case "Exception":
+                        OnExceptionRecived?.Invoke(this, transitionObject.Data);
+                        break;
+                    case
+                        "ServisData":
+                        ProcessServiceData(transitionObject.Data);
+                        break;
+                    default:
+                        throw new InvalidOperationException("Unknown header of revived record");
                 }
+
+
             }
-        });
+        }
     }
 
     private void ProcessServiceData(string data)
     {
-       
+
     }
 
 
@@ -199,9 +209,9 @@ public class ClientPipe : IDisposable
             if (disposing)
             {
                 SendCommand("quit");
+
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
-                _serverResponses?.Dispose();
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer

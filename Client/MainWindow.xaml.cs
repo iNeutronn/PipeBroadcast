@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net;
 using System.Windows;
 
@@ -17,12 +18,18 @@ namespace Client
             _hostIP = hostIP;
             _clientPipe = new ClientPipe(_hostIP.ToString() == "0.0.0.0" ? "." : _hostIP.ToString());
             _clientPipe.Connect();
+            _clientPipe.OnExceptionRecived += _clientPipe_OnExceptionRecived;
             Closing += MainWindow_Closing;
+        }
+
+        private void _clientPipe_OnExceptionRecived(object? sender, string e)
+        {
+            Debug.WriteLine(e);
         }
 
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
-        //    _clientPipe.Dispose();
+            _clientPipe.Dispose();
         }
 
         private void WatherButton_Click(object sender, RoutedEventArgs e)

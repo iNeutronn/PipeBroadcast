@@ -19,7 +19,7 @@ namespace Server
         private bool _isSubscribedToCurrency;
 
         public bool IsSubscribedToWeather { get { return _isSubscribedToWeather; } }
-        public bool IsSubscribedToShares  { get { return _isSubscribedToShares; } }
+        public bool IsSubscribedToShares { get { return _isSubscribedToShares; } }
         public bool IsSubscribedToCurrency { get { return _isSubscribedToCurrency; } }
 
 
@@ -31,10 +31,10 @@ namespace Server
             _isSubscribedToShares = false;
             _isSubscribedToCurrency = false;
             _id = id;
-            _pipeServer = new NamedPipeServerStream("pipe" + _id.ToString(), PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+            _pipeServer = new NamedPipeServerStream("pipe" + _id.ToString(), PipeDirection.InOut, 10, PipeTransmissionMode.Message, PipeOptions.Asynchronous);
         }
 
-        public void StartListenClient() 
+        public void StartListenClient()
         {
             Thread t = new(async () =>
             {
@@ -44,9 +44,9 @@ namespace Server
 
                 byte[] buffer = new byte[256];
 
-                while (true)
+                while (_pipeServer.IsConnected)
                 {
-                    int bytesRead = await _pipeServer.ReadAsync(buffer, 0, buffer.Length);
+                    int bytesRead = _pipeServer.Read(buffer, 0, buffer.Length);
 
                     string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
@@ -77,7 +77,7 @@ namespace Server
             {
                 case "quit":
                     SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
-                    Dispose();     
+                    Dispose();
                     break;
                 case "SubscribToShares":
                     _isSubscribedToShares = true;

@@ -58,11 +58,6 @@ namespace Client
             }
         }
 
-        private void Unsubscribe_Click(object sender, RoutedEventArgs e)
-        {
-            _client.UnSubscribeToWeather();
-            _client.OnWeatherRecived -= _client_ServerResponseReceived;
-            Close();
-        }
+        private void Unsubscribe_Click(object sender, RoutedEventArgs e) => Close();
     }
 }

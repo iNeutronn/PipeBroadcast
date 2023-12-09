@@ -20,23 +20,27 @@ namespace Server.DataTranslators
             {
                 if (_client.IsSubscribedToShares)
                 {
+
+                    TransitionObject transitionObject;
                     try
                     {
-                        TradingData tradingData = _data.GetData();
-                        _client.SendAnswer(
+                        transitionObject = new TransitionObject()
+                        {
+                            Data = JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented),
+                            Header = "CurrencyData"
+                        };
 
-                            new TransitionObject()
-                            {
-                                Data = JsonConvert.SerializeObject(tradingData, Formatting.Indented),
-                                Header = "SharesData" 
-                            }
-                            
-                            );
                     }
-                    catch(WebException ex)
+                    catch (WebException ex)
                     {
-                        //_client.SendAnswer("you have problems with Internet.");    //TODO: make a normal error message
+                        transitionObject = new TransitionObject()
+                        {
+                            Data = ex.Message,
+                            Header = "Exception"
+                        };
                     }
+
+                    _client.SendAnswer(transitionObject);
                 }
             }
         }

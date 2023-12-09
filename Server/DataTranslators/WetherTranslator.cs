@@ -3,6 +3,7 @@ using System.Text;
 using Server.DataParsing;
 using Server.DataParsing.DataObjects.Weather;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace Server.DataTranslators
 {
@@ -19,18 +20,28 @@ namespace Server.DataTranslators
 
                 if (_client.IsSubscribedToWeather)
                 {
-                    _client.SendAnswer(
-               
-                             new TransitionObject()
-                             {
-                                 Data = JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented),
-                                 Header = "WeatherData"
-                             }
-                            
-                            );
+                    TransitionObject transitionObject;
+                    try
+                    {
+                        transitionObject = new TransitionObject()
+                        {
+                            Data = JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented),
+                            Header = "CurrencyData"
+                        };
+
+                    }
+                    catch (WebException ex)
+                    {
+                        transitionObject = new TransitionObject()
+                        {
+                            Data = ex.Message,
+                            Header = "Exception"
+                        };
+                    }
+
+                    _client.SendAnswer(transitionObject);
 
                 }
-
             }
         }
     }

@@ -191,17 +191,17 @@ namespace Server
                 _idThread.Wait();
                 _idThread.Dispose();
                 ClearClients();
-                foreach (var translators in _clientTranslators.Values)
-                {
-                    foreach (var translator in translators)
-                    {
-                        translator.StopTranslate();
-                        if (translator is IDisposable disposableTranslator)
-                        {
-                            disposableTranslator.Dispose();
-                        }
-                    }
-                }
+                //foreach (var translators in _clientTranslators.Values)
+                //{
+                //    foreach (var translator in translators)
+                //    {
+                //        translator.StopTranslate();
+                //        if (translator is IDisposable disposableTranslator)
+                //        {
+                //            disposableTranslator.Dispose();
+                //        }
+                //    }
+                //}
             }
         }
     }
