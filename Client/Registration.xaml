@@ -35,10 +35,10 @@
             <Label Content="IP Address" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top" Height="24" Margin="8,0,25,0"/>
 
 
-            <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" Width="172" Margin="3,36,0,5"/>
+            <TextBox  Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" TextWrapping="Wrap"  Width="172" Margin="3,36,0,5"/>
 
 
-            <TextBox x:Name="hostIp" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" Width="172" Margin="3,29,0,23" Grid.Column="1"/>
+            <TextBox x:Name="hostIp" Text="127.0.0.1" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="Wrap" Width="172" Margin="3,29,0,23" Grid.Column="1"/>
         </Grid>
     </Viewbox >
 </Window>
