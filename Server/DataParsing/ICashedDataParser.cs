@@ -2,10 +2,6 @@
 
 namespace Server.DataParsing
 {
-    //public interface ICashedDataParser<T>
-    //{
-    //    public T GetDataFromSource();
-    //}
 
     internal abstract class CashedDataParser<T>
     {
@@ -19,17 +15,16 @@ namespace Server.DataParsing
             if ((DateTime.Now - LastUpdate > TimeOut) || CachedData == null)
             {
                 LastUpdate = DateTime.Now;
-
-                return GetDataFromSource();
-                //try
-                //{
-                //    T data = GetDataFromSource();
-                //    return data;
-                //}
-                //catch(WebException ex)
-                //{
-                //    return CachedData;
-                //}
+                try
+                {
+                    T data = GetDataFromSource();
+                    return data;
+                }
+                catch (WebException ex)
+                {
+                    Console.WriteLine("Failed to get data from source " + ex.Message);
+                    return CachedData;
+                }
             }
             else
             {
@@ -39,7 +34,7 @@ namespace Server.DataParsing
 
         protected abstract T GetDataFromSource();
 
-        public CashedDataParser(TimeSpan timeOut)
+        protected CashedDataParser(TimeSpan timeOut)
         {
             TimeOut = timeOut;
             LastUpdate = DateTime.MinValue;

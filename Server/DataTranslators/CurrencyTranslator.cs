@@ -15,12 +15,20 @@ namespace Server.DataTranslators
 
         protected override void Translate(object state)
         {
-            lock (_pipeLock)
+            lock (_client)
             {
 
                     if (_client.IsSubscribedToCurrency)
                     {
-                        _client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
+                    _client.SendAnswer(
+
+                            new TransitionObject()
+                            {
+                            Data = JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented),
+                            Header = "CurrencyData"
+                        }
+                        
+                        );
                     }
                
             }
