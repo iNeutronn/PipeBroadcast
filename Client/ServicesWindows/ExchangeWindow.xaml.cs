@@ -22,8 +22,6 @@ namespace Client
         public CurrencyManager CurrencyManager { get; set; }
         private ClientPipe _client;
 
-        public ObservableCollection<CurencyRate> CurrencyRates1 { get; set; }
-
         public ExchangeWindow(ClientPipe client)
         {
             InitializeComponent();
@@ -32,15 +30,6 @@ namespace Client
             _client.OnCurrencyRecived += _client_ServerResponseReceived;
             Closing += ExchangeWindow_Closing;
             CurrencyManager = new CurrencyManager();
-            CurrencyRates1 = new ObservableCollection<CurencyRate>();
-            CurrencyRates1.Add(new CurencyRate()
-            {
-                Code = "FD",
-                ExchangeDate = DateTime.Now,
-                Id = 1,
-                Name = string.Empty,
-                Rate = 0.0
-            });
         }
 
         private void ExchangeWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -51,7 +40,6 @@ namespace Client
 
         private void _client_ServerResponseReceived(object? sender, string e)
         {
-            Debug.WriteLine("message");
             try
             {
                 var currencyData = JsonConvert.DeserializeObject<CurencyData>(e);
@@ -71,11 +59,6 @@ namespace Client
         private void Unsubscribe_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }
