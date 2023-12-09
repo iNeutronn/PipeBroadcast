@@ -127,36 +127,42 @@ public class ClientPipe : IDisposable
     #region subscriprion functions
     public void SubscribeToWeather()
     {
+        if (_isSubscribedToWeather) return;
         SendCommand("SubscribToWeather");
         _isSubscribedToWeather = true;
     }
 
     public void SubscribeToShares()
     {
+        if (_isSubscribedToShares) return;
         SendCommand("SubscribToShares");
         _isSubscribedToShares = true;
     }
 
     public void SubscribeToCurrency()
     {
+        if (_isSubscribedToCurrency) return;
         SendCommand("SubscribToCurrency");
         _isSubscribedToCurrency = true;
     }
 
     public void UnSubscribeToWeather()
     {
+        if (!_isSubscribedToWeather) return;
         SendCommand("UnSubscribToWeather");
         _isSubscribedToWeather = false;
     }
 
     public void UnSubscribeToShares()
     {
+        if (!_isSubscribedToShares) return;
         SendCommand("UnSubscribToShares");
         _isSubscribedToShares = false;
     }
 
     public void UnSubscribeToCurrency()
     {
+        if (!_isSubscribedToCurrency) return;
         SendCommand("UnSubscribToCurrency");
         _isSubscribedToCurrency = false;
     }
