@@ -53,6 +53,11 @@ namespace Client
             _client.OnCurrencyRecived -= _client_ServerResponseReceived;
             Close();
         }
+
+        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
 }
