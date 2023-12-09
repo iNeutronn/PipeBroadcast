@@ -34,15 +34,15 @@ namespace Server
             _pipeServer = new NamedPipeServerStream("pipe" + _id.ToString(), PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
         }
 
-        public void ListenClient() 
+        public void StartListenClient() 
         {
-            _clientCommands = Task.Run(async () =>
+            Thread t = new(async () =>
             {
                 _pipeServer.WaitForConnection();
                 if (_pipeServer == null)
                     throw new InvalidOperationException("NamedPipeServerStream not initialized.");
 
-                byte[] buffer = new byte[256]; 
+                byte[] buffer = new byte[256];
 
                 while (true)
                 {
@@ -50,14 +50,20 @@ namespace Server
 
                     string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
+                    await Console.Out.WriteLineAsync("Lisener: recived " + receivedData);
+
                     if (!string.IsNullOrEmpty(receivedData))
                     {
-                        CommandProcessing(receivedData);
+                        ProcessCommand(receivedData);
 
                         OnClientCommandReceived(receivedData);
-                    }    
+                    }
                 }
-            });
+            })
+            {
+                Name = "ClientListener " + _id
+            };
+            t.Start();
         }
 
         private void OnClientCommandReceived(string receivedData)
@@ -65,13 +71,13 @@ namespace Server
             ClientCommandReceived?.Invoke(this, receivedData);
         }
 
-        private void CommandProcessing(string command)
+        private void ProcessCommand(string command)
         {
             switch (command)
             {
                 case "quit":
                     SendAnswer("OK");
-                    //clientsmanager.RemoveClient(this);
+                    clientsmanager.RemoveClient(this);
                     Dispose();     
                     break;
                 case "SubscribToShares":

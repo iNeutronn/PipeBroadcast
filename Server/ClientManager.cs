@@ -95,7 +95,7 @@ namespace Server
                     idPipe.Read(confirmation, 0, confirmation.Length);
                     Console.WriteLine(confirmation.ToString());
 
-                    client.ListenClient();
+                    client.StartListenClient();
 
                     AddClient(client);
 
