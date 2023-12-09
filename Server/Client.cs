@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Server.DataTranslators;
+using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Linq;
@@ -76,43 +78,43 @@ namespace Server
             switch (command)
             {
                 case "quit":
-                    SendAnswer("OK");
+                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
                     clientsmanager.RemoveClient(this);
                     Dispose();     
                     break;
                 case "SubscribToShares":
                     _isSubscribedToShares = true;
-                    SendAnswer("OK");
+                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
                     break;
                 case "SubscribToWeather":
                     _isSubscribedToWeather = true;
-                    SendAnswer("OK");
+                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
                     break;
                 case "SubscribToCurrency":
                     _isSubscribedToCurrency = true;
-                    SendAnswer("OK");
+                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
                     break;
                 case "UnSubscribToShares":
                     _isSubscribedToShares = false;
-                    SendAnswer("OK");
+                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
                     break;
                 case "UnSubscribToWeather":
                     _isSubscribedToWeather = false;
-                    SendAnswer("OK");
+                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
                     break;
                 case "UnSubscribToCurrency":
                     _isSubscribedToCurrency = false;
-                    SendAnswer("OK");
+                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
                     break;
                 default:
-                    SendAnswer("ERR");
+                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "ERR" });
                     break;
             }
         }
 
-        public void SendAnswer(string answer)
+        public void SendAnswer(TransitionObject transitionObject)
         {
-            byte[] ServerAnswer = Encoding.UTF8.GetBytes(answer);
+            byte[] ServerAnswer = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(transitionObject));
             _pipeServer.Write(ServerAnswer, 0, ServerAnswer.Length);
         }
 

@@ -23,11 +23,19 @@ namespace Server.DataTranslators
                     try
                     {
                         TradingData tradingData = _data.GetData();
-                        _client.SendAnswer(JsonConvert.SerializeObject(tradingData, Formatting.Indented));
+                        _client.SendAnswer(
+
+                            new TransitionObject()
+                            {
+                                Data = JsonConvert.SerializeObject(tradingData, Formatting.Indented),
+                                Header = "SharesData" 
+                            }
+                            
+                            );
                     }
                     catch(WebException ex)
                     {
-                        _client.SendAnswer("you have problems with Internet.");    
+                        //_client.SendAnswer("you have problems with Internet.");    //TODO: make a normal error message
                     }
                 }
             }

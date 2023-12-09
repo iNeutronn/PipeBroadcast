@@ -112,6 +112,8 @@ public class ClientPipe : IDisposable
                 if (bytesRead > 0)
                 {
                     string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    
+                    
                     // Handle received data from the server as needed
                     OnServerResponseReceived(receivedData);
                 }

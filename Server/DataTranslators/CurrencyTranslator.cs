@@ -20,7 +20,15 @@ namespace Server.DataTranslators
 
                     if (_client.IsSubscribedToCurrency)
                     {
-                        _client.SendAnswer(JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented));
+                    _client.SendAnswer(
+
+                            new TransitionObject()
+                            {
+                            Data = JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented),
+                            Header = "CurrencyData"
+                        }
+                        
+                        );
                     }
                
             }
