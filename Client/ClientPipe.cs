@@ -144,8 +144,6 @@ public class ClientPipe : IDisposable
                     default:
                         throw new InvalidOperationException("Unknown header of revived record");
                 }
-
-
             }
         }
     }
