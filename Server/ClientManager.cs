@@ -5,8 +5,9 @@ using System.Text;
 using Server.DataParsing;
 using Server.DataParsing.DataObjects.Curency;
 using Server.DataParsing.DataObjects.Shares;
-using Server.DataTranslators;
 using Server.DataParsing.DataObjects.Weather;
+using Server.DataTranslator;
+using Server.DataTranslators;
 
 namespace Server
 {
@@ -16,6 +17,7 @@ namespace Server
         private int _idCounter;
         private Task _idThread;
         private Dictionary<Client, IDataTranslator[]> _clientTranslators;
+        //private IDataTranslator[] _translators;
         private bool _isRunning = true;
 
         public ClientManager()
@@ -24,6 +26,15 @@ namespace Server
             _idCounter = 0;
             _idThread = Task.Run(() => idThreadWork());
             _clientTranslators = new Dictionary<Client, IDataTranslator[]>();
+            //_translators = new IDataTranslator[]
+            //{
+            //   new SharesTranslator(new SharesDataParser(), TimeSpan.FromSeconds(100000) , _clients),
+            //   new CurrencyTranslator(new CurencyDataParser(), new TimeSpan(0,3,0) , _clients),
+            //   new WetherTranslator(new WeatherDataParser(), TimeSpan.FromSeconds(10) , _clients)
+            //};
+
+            //foreach (var translator in _translators)
+            //    translator.StartTranslate();
         }
 
         public IEnumerator<Client> GetEnumerator()
@@ -75,27 +86,29 @@ namespace Server
                 while (_isRunning)
                 {
                     await idPipe.WaitForConnectionAsync();
-                    Console.WriteLine("IsConnected");
+                    //Console.WriteLine("IsConnected");
 
                     Guid clientId = Guid.NewGuid();
-                    Console.WriteLine("new Id = " + clientId);
-                    Client client = new (clientId, this);
+                    //Console.WriteLine("Id = " + clientId);
+                    Client client = new Client(clientId, this);
 
                     ++_idCounter;
 
                     byte[] clientIdBytes = clientId.ToByteArray();
-
+                    //Console.WriteLine(clientIdBytes);
+                    //Console.WriteLine(clientIdBytes.Length);
 
                     idPipe.Write(clientIdBytes, 0, clientIdBytes.Length);
 
 
 
-                    
+                    //Console.WriteLine("IsWrite");
                     byte[] confirmation = new byte[1];
+                    // int bytesRead = await idPipe.ReadAsync(confirmation, 0, confirmation.Length);
                     idPipe.Read(confirmation, 0, confirmation.Length);
                     Console.WriteLine(confirmation.ToString());
 
-                    client.StartListenClient();
+                    client.ListenClient();
 
                     AddClient(client);
 
@@ -191,17 +204,14 @@ namespace Server
                 _idThread.Wait();
                 _idThread.Dispose();
                 ClearClients();
-                foreach (var translators in _clientTranslators.Values)
-                {
-                    foreach (var translator in translators)
-                    {
-                        translator.StopTranslate();
-                        if (translator is IDisposable disposableTranslator)
-                        {
-                            disposableTranslator.Dispose();
-                        }
-                    }
-                }
+                //foreach (var translator in _translators)
+                //{
+                //    translator.StopTranslate();
+                //    if (translator is IDisposable disposableTranslator)
+                //    {
+                //        disposableTranslator.Dispose();
+                //    }
+                //}
             }
         }
     }

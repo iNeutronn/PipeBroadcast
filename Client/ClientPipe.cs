@@ -4,8 +4,12 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Server.DataTranslators;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Threading;
+using Microsoft.Win32.SafeHandles;
+using System.Runtime.Versioning;
 
 namespace Client;
 
@@ -24,16 +28,11 @@ public class ClientPipe : IDisposable
     private bool _isSubscribedToShares = false;
     private bool _isSubscribedToCurrency = false;
 
-    public bool IsSubscribedToWeather => _isSubscribedToWeather;
+    public bool IsSubscribedToWeather  => _isSubscribedToWeather;
     public bool IsSubscribedToShares => _isSubscribedToShares;
     public bool IsSubscribedToCurrency => _isSubscribedToCurrency;
 
-   
-
-
-    public event EventHandler<string> OnSharesRecived;
-    public event EventHandler<string> OnWeatherRecived;
-    public event EventHandler<string> OnCurrencyRecived;
+    public event EventHandler<string> ServerResponseReceived;
 
     public ClientPipe(string host)
     {
@@ -46,9 +45,7 @@ public class ClientPipe : IDisposable
         string pipeName = "pipe" + _id.ToString();
         _pipeClient = new NamedPipeClientStream(_host, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
         _pipeClient.Connect();
-        listenServerThrerad = new Thread(ListenServer);
-        listenServerThrerad.IsBackground = true;
-        listenServerThrerad.Start();
+        ListenServer();
     }
 
 
@@ -86,20 +83,20 @@ public class ClientPipe : IDisposable
         if (_pipeClient == null)
         {
             throw new InvalidOperationException("NamedPipeClientStream not initialized.");
-        }
-
+        }    
+       
 
         byte[] data = Encoding.UTF8.GetBytes(command);
         _pipeClient.Write(data, 0, data.Length);
 
-
+       
     }
 
     private void ListenServer()
     {
-        _serverResponses = Task.Run(() =>
+        _serverResponses = Task.Run(() => 
         {
-            if (_pipeClient == null)
+            if(_pipeClient == null)
             {
                 throw new InvalidOperationException("NamedPipeClientStream not initialized.");
             }
@@ -113,79 +110,51 @@ public class ClientPipe : IDisposable
                 if (bytesRead > 0)
                 {
                     string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-
-                    TransitionObject trasitionObject = JsonConvert.DeserializeObject<TransitionObject>(receivedData!)!;
-                    switch (trasitionObject.Header)
-                    {
-                        case "SharesData":
-                            OnCurrencyRecived?.Invoke(this, trasitionObject.Data);
-                            break;
-                        case "WeatherData":
-                            OnWeatherRecived?.Invoke(this, trasitionObject.Data);
-                            break;
-                        case "CurrencyData":
-                            OnSharesRecived?.Invoke(this, trasitionObject.Data);
-                            break;
-                        case
-                            "ServisData":
-                            ProcessServiseData(trasitionObject.Data);
-                            break;
-                        default:
-                            throw new InvalidOperationException("Unknown header of revived record");
-                    }
-                   
-                    
+                    // Handle received data from the server as needed
+                    OnServerResponseReceived(receivedData);
                 }
             }
-        });
+        });  
     }
 
-    private void ProcessServiseData(string data)
+    protected virtual void OnServerResponseReceived(string response)
     {
-        throw new NotImplementedException();
+        ServerResponseReceived?.Invoke(this, response);
     }
-
-
 
     #region subscriprion functions
     public void SubscribeToWeather()
     {
-        if (_isSubscribedToWeather) return;
         SendCommand("SubscribToWeather");
         _isSubscribedToWeather = true;
     }
 
     public void SubscribeToShares()
     {
-        if (_isSubscribedToShares) return;
         SendCommand("SubscribToShares");
         _isSubscribedToShares = true;
     }
 
     public void SubscribeToCurrency()
     {
-        if (_isSubscribedToCurrency) return;
         SendCommand("SubscribToCurrency");
         _isSubscribedToCurrency = true;
     }
 
     public void UnSubscribeToWeather()
     {
-        if (!_isSubscribedToWeather) return;
         SendCommand("UnSubscribToWeather");
         _isSubscribedToWeather = false;
     }
 
     public void UnSubscribeToShares()
     {
-        if (!_isSubscribedToShares) return;
         SendCommand("UnSubscribToShares");
         _isSubscribedToShares = false;
     }
 
     public void UnSubscribeToCurrency()
     {
-        if (!_isSubscribedToCurrency) return;
         SendCommand("UnSubscribToCurrency");
         _isSubscribedToCurrency = false;
     }
@@ -224,5 +193,5 @@ public class ClientPipe : IDisposable
         GC.SuppressFinalize(this);
     }
 
-
+  
 }

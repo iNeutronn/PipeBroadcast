@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Server.DataTranslators;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Linq;
@@ -36,15 +34,15 @@ namespace Server
             _pipeServer = new NamedPipeServerStream("pipe" + _id.ToString(), PipeDirection.InOut, 10, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
         }
 
-        public void StartListenClient() 
+        public void ListenClient() 
         {
-            Thread t = new(async () =>
+            _clientCommands = Task.Run(async () =>
             {
                 _pipeServer.WaitForConnection();
                 if (_pipeServer == null)
                     throw new InvalidOperationException("NamedPipeServerStream not initialized.");
 
-                byte[] buffer = new byte[256];
+                byte[] buffer = new byte[256]; 
 
                 while (true)
                 {
@@ -52,20 +50,14 @@ namespace Server
 
                     string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-                    await Console.Out.WriteLineAsync("Lisener: recived " + receivedData);
-
                     if (!string.IsNullOrEmpty(receivedData))
                     {
-                        ProcessCommand(receivedData);
+                        CommandProcessing(receivedData);
 
                         OnClientCommandReceived(receivedData);
-                    }
+                    }    
                 }
-            })
-            {
-                Name = "ClientListener " + _id
-            };
-            t.Start();
+            });
         }
 
         private void OnClientCommandReceived(string receivedData)
@@ -73,48 +65,48 @@ namespace Server
             ClientCommandReceived?.Invoke(this, receivedData);
         }
 
-        private void ProcessCommand(string command)
+        private void CommandProcessing(string command)
         {
             switch (command)
             {
                 case "quit":
-                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
-                    clientsmanager.RemoveClient(this);
+                    SendAnswer("OK");
+                    //clientsmanager.RemoveClient(this);
                     Dispose();     
                     break;
                 case "SubscribToShares":
                     _isSubscribedToShares = true;
-                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
+                    SendAnswer("OK");
                     break;
                 case "SubscribToWeather":
                     _isSubscribedToWeather = true;
-                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
+                    SendAnswer("OK");
                     break;
                 case "SubscribToCurrency":
                     _isSubscribedToCurrency = true;
-                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
+                    SendAnswer("OK");
                     break;
                 case "UnSubscribToShares":
                     _isSubscribedToShares = false;
-                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
+                    SendAnswer("OK");
                     break;
                 case "UnSubscribToWeather":
                     _isSubscribedToWeather = false;
-                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
+                    SendAnswer("OK");
                     break;
                 case "UnSubscribToCurrency":
                     _isSubscribedToCurrency = false;
-                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "OK" });
+                    SendAnswer("OK");
                     break;
                 default:
-                    SendAnswer(new TransitionObject() { Header = "ServisData", Data = "ERR" });
+                    SendAnswer("ERR");
                     break;
             }
         }
 
-        public void SendAnswer(TransitionObject transitionObject)
+        public void SendAnswer(string answer)
         {
-            byte[] ServerAnswer = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(transitionObject));
+            byte[] ServerAnswer = Encoding.UTF8.GetBytes(answer);
             _pipeServer.Write(ServerAnswer, 0, ServerAnswer.Length);
         }
 

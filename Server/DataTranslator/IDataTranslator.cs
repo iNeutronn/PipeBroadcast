@@ -18,17 +18,18 @@ namespace Server
 
     abstract class DataTranslator<T> : IDataTranslator, IDisposable
     {
+        protected static readonly object _pipeLock = new object();
         protected TimeSpan _interval;
         protected CashedDataParser<T> _data;
         protected Timer _timer;
         protected Client _client;
 
-        protected DataTranslator(CashedDataParser<T> data, TimeSpan interval, Client client)
+        public DataTranslator(CashedDataParser<T> data, TimeSpan interval, Client client)
         {
             _client = client;
             _data = data;
             _interval = interval;
-            _timer = new Timer(Translate!, null, Timeout.Infinite, Timeout.Infinite);
+            _timer = new Timer(Translate, null, Timeout.Infinite, Timeout.Infinite);
         }
 
         public void StartTranslate()

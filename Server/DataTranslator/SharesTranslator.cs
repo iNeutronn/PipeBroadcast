@@ -6,7 +6,7 @@ using System.Text;
 using Server.DataParsing.DataObjects.Shares;
 using System.Net;
 
-namespace Server.DataTranslators
+namespace Server.DataTranslator
 {
     internal class SharesTranslator : DataTranslator<TradingData>
     {
@@ -16,26 +16,18 @@ namespace Server.DataTranslators
 
         protected override void Translate(object state)
         {
-            lock (_client)
+            lock (_pipeLock)
             {
                 if (_client.IsSubscribedToShares)
                 {
                     try
                     {
                         TradingData tradingData = _data.GetData();
-                        _client.SendAnswer(
-
-                            new TransitionObject()
-                            {
-                                Data = JsonConvert.SerializeObject(tradingData, Formatting.Indented),
-                                Header = "SharesData" 
-                            }
-                            
-                            );
+                        _client.SendAnswer(JsonConvert.SerializeObject(tradingData, Formatting.Indented));
                     }
                     catch(WebException ex)
                     {
-                        //_client.SendAnswer("you have problems with Internet.");    //TODO: make a normal error message
+                        _client.SendAnswer("you have problems with Internet.");    
                     }
                 }
             }
