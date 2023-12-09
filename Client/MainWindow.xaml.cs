@@ -29,7 +29,7 @@ namespace Client
 
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
-            //_clientPipe.Dispose();
+            _clientPipe.Dispose();
         }
 
         private void WatherButton_Click(object sender, RoutedEventArgs e)

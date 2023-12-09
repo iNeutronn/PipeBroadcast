@@ -108,7 +108,15 @@ public class ClientPipe : IDisposable
 
         while (true)
         {
-            int bytesRead = _pipeClient.Read(buffer, 0, buffer.Length);
+            int bytesRead;
+            try
+            {
+                bytesRead = _pipeClient.Read(buffer, 0, buffer.Length);
+            }
+            catch (ObjectDisposedException ex)
+            {
+                break; 
+            }
 
             if (bytesRead > 0)
             {
