@@ -17,10 +17,18 @@ namespace Client
             _hostIP = hostIP;
             _clientPipe = new ClientPipe(_hostIP.ToString() == "0.0.0.0" ? "." : _hostIP.ToString());
             _clientPipe.Connect();
+            Closing += MainWindow_Closing;
+        }
+
+        private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+        //    _clientPipe.Dispose();
         }
 
         private void WatherButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_clientPipe.IsSubscribedToWeather) return;
+
             _clientPipe.SubscribeToWeather();
 
             WeatherWindow weatherWindow = new (_clientPipe);
@@ -30,6 +38,8 @@ namespace Client
 
         private void SharesButton_Click(object sender, RoutedEventArgs e)
         {
+            if(_clientPipe.IsSubscribedToShares) return;
+
             _clientPipe.SubscribeToShares();
 
             SharesWindow sharesWindow = new (_clientPipe);
@@ -39,6 +49,8 @@ namespace Client
 
         private void CurrencyButton_Click(object sender, RoutedEventArgs e)
         {
+            if(_clientPipe.IsSubscribedToCurrency) return;
+
             _clientPipe.SubscribeToCurrency();
 
             ExchangeWindow exchange = new (_clientPipe);

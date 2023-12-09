@@ -114,21 +114,21 @@ public class ClientPipe : IDisposable
                 {
                     string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-                    TransitionObject trasitionObject = JsonConvert.DeserializeObject<TransitionObject>(receivedData!)!;
-                    switch (trasitionObject.Header)
+                    TransitionObject transitionObject = JsonConvert.DeserializeObject<TransitionObject>(receivedData!)!;
+                    switch (transitionObject.Header)
                     {
                         case "SharesData":
-                            OnCurrencyRecived?.Invoke(this, trasitionObject.Data);
+                            OnCurrencyRecived?.Invoke(this, transitionObject.Data);
                             break;
                         case "WeatherData":
-                            OnWeatherRecived?.Invoke(this, trasitionObject.Data);
+                            OnWeatherRecived?.Invoke(this, transitionObject.Data);
                             break;
                         case "CurrencyData":
-                            OnSharesRecived?.Invoke(this, trasitionObject.Data);
+                            OnSharesRecived?.Invoke(this, transitionObject.Data);
                             break;
                         case
                             "ServisData":
-                            ProcessServiceData(trasitionObject.Data);
+                            ProcessServiceData(transitionObject.Data);
                             break;
                         default:
                             throw new InvalidOperationException("Unknown header of revived record");

@@ -31,6 +31,13 @@ namespace Client
             InitializeComponent();
             _client = client;
             _client.OnWeatherRecived += _client_ServerResponseReceived;
+            Closing += WeatherWindow_Closing;
+        }
+
+        private void WeatherWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _client.UnSubscribeToWeather();
+            _client.OnWeatherRecived -= _client_ServerResponseReceived;
         }
 
         private void _client_ServerResponseReceived(object? sender, string e)

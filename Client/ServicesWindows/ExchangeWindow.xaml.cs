@@ -27,6 +27,13 @@ namespace Client
             InitializeComponent();
             _client = client;
             _client.OnCurrencyRecived += _client_ServerResponseReceived;
+            Closing += ExchangeWindow_Closing;
+        }
+
+        private void ExchangeWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _client.UnSubscribeToCurrency();
+            _client.OnCurrencyRecived -= _client_ServerResponseReceived;
         }
 
         private void _client_ServerResponseReceived(object? sender, string e)
@@ -49,8 +56,6 @@ namespace Client
 
         private void Unsubscribe_Click(object sender, RoutedEventArgs e)
         {
-            _client.UnSubscribeToCurrency();
-            _client.OnCurrencyRecived -= _client_ServerResponseReceived;
             Close();
         }
 
