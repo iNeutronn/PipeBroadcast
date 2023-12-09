@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="WeatherWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="WeatherWindow" Height="664" Width="596">
+    <Grid Margin="0,0,0,-6">
+
     </Grid>
 </Window>
