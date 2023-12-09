@@ -1,9 +1,13 @@
 ﻿namespace Server.DataParsing.DataObjects.Weather
 {
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
     public class Temperature
     {
-        public Minimum Minimum { get; set; }
-        public Maximum Maximum { get; set; }
+        public ValueUnit Minimum { get; set; }
+        public ValueUnit Maximum { get; set; }
     }
+
+
+
+
+
 }

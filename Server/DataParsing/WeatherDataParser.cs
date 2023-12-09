@@ -6,7 +6,7 @@ namespace Server.DataParsing
 {
     internal class WeatherDataParser : CashedDataParser<WhetherForecast>, IDisposable
     {
-        private string _apiKey = "viSk4R1eBd7nPMPHImCbcL2rTcUCK8FF";
+        private string _apiKey = "Dv89Uz6cEitkEt1af3WLY4RzN6pNJJbG"; //"viSk4R1eBd7nPMPHImCbcL2rTcUCK8FF";
         private string _cityKey = "324561"; //Lviv
         WebClient webClient = new WebClient();
         public static readonly TimeSpan DefoultTimeOut = TimeSpan.FromMinutes(30);
@@ -23,7 +23,7 @@ namespace Server.DataParsing
 
         protected override WhetherForecast GetDataFromSource()
         {
-            string jsonUrl = $"http://dataservice.accuweather.com/forecasts/v1/daily/5day/{_cityKey}?apikey={_apiKey}&metric=true";
+            string jsonUrl = $"http://dataservice.accuweather.com/forecasts/v1/daily/5day/{_cityKey}?apikey={_apiKey}&metric=true&details=true";
             string json = webClient.DownloadString(jsonUrl);
             WhetherForecast weatherData = JsonConvert.DeserializeObject<WhetherForecast>(json)!;
             return weatherData;
