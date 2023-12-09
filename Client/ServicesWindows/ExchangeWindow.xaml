@@ -5,115 +5,124 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="Exchange" Height="477" Width="600">
+        Title="Exchange" Height="477" Width="533">
+
+    <Border Margin="0,0,56,0">
+
+
+        <Grid Height="441" VerticalAlignment="Center" Margin="27,0,-56,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="482*"/>
+                <ColumnDefinition Width="19*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55*"/>
+                <RowDefinition Height="37*"/>
+                <RowDefinition Height="332*"/>
+                <RowDefinition Height="34*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
 
 
 
 
-    <Grid Height="456" VerticalAlignment="Top" >
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="0*"/>
-        </Grid.RowDefinitions>
+            <Label Content="Exchange Rate" HorizontalAlignment="Center" VerticalAlignment="Center" Width="190" FontSize="24" FontWeight="Bold" Height="42" Grid.Column="1"/>
+            <Label Content="updated " HorizontalAlignment="Left" Margin="312,9,0,0" VerticalAlignment="Top" Width="66" Height="26" Grid.Column="1" Grid.Row="1"/>
+            <Label Content="data here" HorizontalAlignment="Left" Margin="360,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.259,-0.26" Height="26" Width="60" Grid.Column="1" Grid.Row="1"/>
+            <Rectangle Fill="#FFAF9AC9" Margin="0,3,0,26" HorizontalAlignment="Center" Width="374" Grid.Column="1" Grid.Row="1" />
+
+            <Border BorderBrush="Black" BorderThickness="1,1,1,1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="232" Width="456" Grid.Row="2" Grid.Column="1" Margin="0,30,0,0">
+
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="232" Width="456" Grid.Row="6" Grid.Column="3">
+
+                    <Grid.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                        </Style>
+                    </Grid.Resources>
 
 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="41"/>
+                        <RowDefinition Height="41"/>
+                        <RowDefinition Height="41"/>
+                        <RowDefinition Height="41"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
 
-        <Label Content="Exchange Rate" HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" Width="190" FontSize="24" FontWeight="Bold" Height="42"/>
-        <Label Content="updated " HorizontalAlignment="Left" Margin="379,66,0,0" VerticalAlignment="Top" Width="66" Height="26"/>
-        <Label Content="data here" HorizontalAlignment="Left" Margin="427,66,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.259,-0.26" Height="26" Width="60"/>
-        <Rectangle Fill="#FFAF9AC9" Margin="0,60,0,390" HorizontalAlignment="Center" Width="374" />
-
-        <Border BorderBrush="Black" BorderThickness="1,1,1,1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="232" Width="456" Margin="0,124,0,0">
-
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="232" Width="456" Grid.Row="6" Grid.Column="3">
-
-                <Grid.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                        <Setter Property="BorderBrush" Value="Black"/>
-                    </Style>
-                </Grid.Resources>
-
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="24"/>
-                    <RowDefinition Height="41"/>
-                    <RowDefinition Height="41"/>
-                    <RowDefinition Height="41"/>
-                    <RowDefinition Height="41"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="33*"/>
-                    <ColumnDefinition Width="33*"/>
-                    <ColumnDefinition Width="34*"/>
-                </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="33*"/>
+                        <ColumnDefinition Width="33*"/>
+                        <ColumnDefinition Width="34*"/>
+                    </Grid.ColumnDefinitions>
 
 
 
 
 
 
-                <Border Grid.Row="0" BorderThickness="1,1,1,1" BorderBrush="Black" Grid.Column="0" Background="LightGray"/>
-                <Border Grid.Row="0" BorderThickness="1,1,1,1" BorderBrush="Black" Background="LightGray" Grid.ColumnSpan="3" Margin="150,0,0,0"/>
-                <Border Grid.Row="0" Grid.Column="2" BorderThickness="1,1,1,1" BorderBrush="Black" Background="LightGray">
-                </Border>
+                    <Border Grid.Row="0" BorderThickness="1,1,1,1" BorderBrush="Black" Grid.Column="0" Background="LightGray"/>
+                    <Border Grid.Row="0" BorderThickness="1,1,1,1" BorderBrush="Black" Background="LightGray" Grid.ColumnSpan="3" Margin="150,0,0,0"/>
+                    <Border Grid.Row="0" Grid.Column="2" BorderThickness="1,1,1,1" BorderBrush="Black" Background="LightGray">
+                    </Border>
 
-                <TextBlock Background="LightGray" Text="Flag" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontFamily="Cascadia Mono" Height="20" Width="38"/>
-                <TextBlock Background="LightGray" Text="Curency" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontFamily="Cascadia Mono" Grid.Column="1" Height="20" Width="56"/>
-                <TextBlock Grid.Column="2" Background="LightGray" Text="Exchange Rate" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontFamily="Cascadia Mono" Height="20" Width="122"/>
+                    <TextBlock Background="LightGray" Text="Flag" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontFamily="Cascadia Mono" Height="20" Width="38"/>
+                    <TextBlock Background="LightGray" Text="Curency" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontFamily="Cascadia Mono" Grid.Column="1" Height="20" Width="56"/>
+                    <TextBlock Grid.Column="2" Background="LightGray" Text="Exchange Rate" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontFamily="Cascadia Mono" Height="20" Width="122"/>
 
-                <Border Grid.Row="1" Grid.Column="0" Background="White">
-                    <Image Source="/Images/завантаження12.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="41" Width="54" />
-                </Border>
+                    <Border Grid.Row="1" Grid.Column="0" Background="White">
+                        <Image Source="/Images/завантаження12.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="41" Width="54" />
+                    </Border>
 
-                <Border Grid.Row="2" Grid.Column="0" Background="White">
-                    <Image Source="/Images/завантаження (1).jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="41" Width="57" />
-                </Border>
+                    <Border Grid.Row="2" Grid.Column="0" Background="White">
+                        <Image Source="/Images/завантаження (1).jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="41" Width="57" />
+                    </Border>
 
-                <Border Grid.Row="3" Grid.Column="0" Background="White">
-                    <Image Source="/Images/flag-velikobritanii-union-jack.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="44" Width="49" />
-                </Border>
+                    <Border Grid.Row="3" Grid.Column="0" Background="White">
+                        <Image Source="/Images/flag-velikobritanii-union-jack.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="44" Width="49" />
+                    </Border>
 
-                <Border Grid.Row="4" Grid.Column="0" Background="White">
-                    <Image Source="/Images/завантаження (1).png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="46" Width="52" />
-                </Border>
+                    <Border Grid.Row="4" Grid.Column="0" Background="White">
+                        <Image Source="/Images/завантаження (1).png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="46" Width="52" />
+                    </Border>
 
-                <Border Grid.Row="5" Grid.Column="0" Background="White">
-                    <Image Source="/Images/flag-shvetsii_b11.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="40" Width="51" />
-                </Border>
-
-
-                <Border Grid.Row="1" Grid.Column="1" Background="White">
-                  
-                </Border>
-                <Border Grid.Row="2" Grid.Column="1" Background="White">
-                </Border>
-                <Border Grid.Row="3" Grid.Column="1" Background="White">
-                </Border>
-                <Border Grid.Row="4" Grid.Column="1" Background="White">
-                </Border>
-                <Border Grid.Row="5" Grid.Column="1" Background="White">
-                </Border>
-
-                <Border Grid.Row="1" Grid.Column="2" Background="White">
-                </Border>
-                <Border Grid.Row="2" Grid.Column="2" Background="White">
-                </Border>
-                <Border Grid.Row="3" Grid.Column="2" Background="White">
-                </Border>
-                <Border Grid.Row="4" Grid.Column="2" Background="White">
-                </Border>
-                <Border Grid.Row="5" Grid.Column="2" Background="White">
-                </Border>
-
-            </Grid>
-        </Border>
-        <Button Content="Unsubscribe" HorizontalAlignment="Center" Height="40" Margin="0,387,0,0" VerticalAlignment="Top" Width="190" Background="#FFAF9AC9" FontSize="18" Click="Unsubscribe_Click"/>
+                    <Border Grid.Row="5" Grid.Column="0" Background="White">
+                        <Image Source="/Images/flag-shvetsii_b11.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Height="40" Width="51" />
+                    </Border>
 
 
-    </Grid>
+                    <Border Grid.Row="1" Grid.Column="1" Background="White">
+
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="1" Background="White">
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="1" Background="White">
+                    </Border>
+                    <Border Grid.Row="4" Grid.Column="1" Background="White">
+                    </Border>
+                    <Border Grid.Row="5" Grid.Column="1" Background="White">
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="2" Background="White">
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="2" Background="White">
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="2" Background="White">
+                    </Border>
+                    <Border Grid.Row="4" Grid.Column="2" Background="White">
+                    </Border>
+                    <Border Grid.Row="5" Grid.Column="2" Background="White">
+                    </Border>
+
+                </Grid>
+            </Border>
+            <Button Content="Unsubscribe" HorizontalAlignment="Center" Height="40" Margin="0,290,0,0" VerticalAlignment="Top" Width="190" Background="#FFAF9AC9" FontSize="18" Click="Unsubscribe_Click" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2"/>
+
+
+        </Grid>
+    </Border>
 </Window>
