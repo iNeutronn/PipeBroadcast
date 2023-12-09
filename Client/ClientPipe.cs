@@ -128,7 +128,7 @@ public class ClientPipe : IDisposable
                             break;
                         case
                             "ServisData":
-                            ProcessServiseData(trasitionObject.Data);
+                            ProcessServiceData(trasitionObject.Data);
                             break;
                         default:
                             throw new InvalidOperationException("Unknown header of revived record");
@@ -140,9 +140,9 @@ public class ClientPipe : IDisposable
         });
     }
 
-    private void ProcessServiseData(string data)
+    private void ProcessServiceData(string data)
     {
-        throw new NotImplementedException();
+       
     }
 
 
