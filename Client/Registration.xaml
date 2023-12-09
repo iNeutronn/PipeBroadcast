@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Registration"  Height="397" Width="291" >
 
-    <Viewbox Stretch="Uniform" Margin="0,0,3,-16">
+    <Viewbox Stretch="Uniform">
 
         <Grid Height="368" Width="234">
             <Grid.ColumnDefinitions>
@@ -16,8 +16,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="0"/>
                 <RowDefinition Height="Auto" MinHeight="0"/>
-                <RowDefinition Height="Auto" MinHeight="65"/>
-                <RowDefinition Height="76"/>
+                <RowDefinition Height="Auto" MinHeight="66"/>
+                <RowDefinition Height="75"/>
                 <RowDefinition Height="11.84"/>
                 <RowDefinition Height="75.16"/>
                 <RowDefinition/>
