@@ -26,7 +26,7 @@ namespace Client
         {
             InitializeComponent();
             _client = client;
-            _client.ServerResponseReceived += _client_ServerResponseReceived;
+            _client.OnCurrencyRecived += _client_ServerResponseReceived;
         }
 
         private void _client_ServerResponseReceived(object? sender, string e)
@@ -50,7 +50,7 @@ namespace Client
         private void Unsubscribe_Click(object sender, RoutedEventArgs e)
         {
             _client.UnSubscribeToCurrency();
-            _client.ServerResponseReceived -= _client_ServerResponseReceived;
+            _client.OnCurrencyRecived -= _client_ServerResponseReceived;
             Close();
         }
     }

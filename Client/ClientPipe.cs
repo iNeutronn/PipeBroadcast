@@ -4,12 +4,8 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-using System.Threading;
-using Microsoft.Win32.SafeHandles;
-using System.Runtime.Versioning;
+using Newtonsoft.Json;
+using Server.DataTranslators;
 
 namespace Client;
 
@@ -28,11 +24,16 @@ public class ClientPipe : IDisposable
     private bool _isSubscribedToShares = false;
     private bool _isSubscribedToCurrency = false;
 
-    public bool IsSubscribedToWeather  => _isSubscribedToWeather;
+    public bool IsSubscribedToWeather => _isSubscribedToWeather;
     public bool IsSubscribedToShares => _isSubscribedToShares;
     public bool IsSubscribedToCurrency => _isSubscribedToCurrency;
 
-    public event EventHandler<string> ServerResponseReceived;
+   
+
+
+    public event EventHandler<string> OnSharesRecived;
+    public event EventHandler<string> OnWeatherRecived;
+    public event EventHandler<string> OnCurrencyRecived;
 
     public ClientPipe(string host)
     {
@@ -85,20 +86,20 @@ public class ClientPipe : IDisposable
         if (_pipeClient == null)
         {
             throw new InvalidOperationException("NamedPipeClientStream not initialized.");
-        }    
-       
+        }
+
 
         byte[] data = Encoding.UTF8.GetBytes(command);
         _pipeClient.Write(data, 0, data.Length);
 
-       
+
     }
 
     private void ListenServer()
     {
-        _serverResponses = Task.Run(() => 
+        _serverResponses = Task.Run(() =>
         {
-            if(_pipeClient == null)
+            if (_pipeClient == null)
             {
                 throw new InvalidOperationException("NamedPipeClientStream not initialized.");
             }
@@ -112,19 +113,39 @@ public class ClientPipe : IDisposable
                 if (bytesRead > 0)
                 {
                     string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+                    TransitionObject trasitionObject = JsonConvert.DeserializeObject<TransitionObject>(receivedData!)!;
+                    switch (trasitionObject.Header)
+                    {
+                        case "SharesData":
+                            OnCurrencyRecived?.Invoke(this, trasitionObject.Data);
+                            break;
+                        case "WeatherData":
+                            OnWeatherRecived?.Invoke(this, trasitionObject.Data);
+                            break;
+                        case "CurrencyData":
+                            OnSharesRecived?.Invoke(this, trasitionObject.Data);
+                            break;
+                        case
+                            "ServisData":
+                            ProcessServiseData(trasitionObject.Data);
+                            break;
+                        default:
+                            throw new InvalidOperationException("Unknown header of revived record");
+                    }
+                   
                     
-                    
-                    // Handle received data from the server as needed
-                    OnServerResponseReceived(receivedData);
                 }
             }
-        });  
+        });
     }
 
-    protected virtual void OnServerResponseReceived(string response)
+    private void ProcessServiseData(string data)
     {
-        ServerResponseReceived?.Invoke(this, response);
+        throw new NotImplementedException();
     }
+
+
 
     #region subscriprion functions
     public void SubscribeToWeather()
@@ -203,5 +224,5 @@ public class ClientPipe : IDisposable
         GC.SuppressFinalize(this);
     }
 
-  
+
 }
