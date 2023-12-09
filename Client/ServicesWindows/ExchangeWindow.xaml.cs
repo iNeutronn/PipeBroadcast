@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,15 +19,28 @@ namespace Client
 {
     public partial class ExchangeWindow : Window
     {
-        private CurencyData _currencyData;
+        public CurrencyManager CurrencyManager { get; set; }
         private ClientPipe _client;
+
+        public ObservableCollection<CurencyRate> CurrencyRates1 { get; set; }
 
         public ExchangeWindow(ClientPipe client)
         {
             InitializeComponent();
+            DataContext = this;
             _client = client;
             _client.OnCurrencyRecived += _client_ServerResponseReceived;
             Closing += ExchangeWindow_Closing;
+            CurrencyManager = new CurrencyManager();
+            CurrencyRates1 = new ObservableCollection<CurencyRate>();
+            CurrencyRates1.Add(new CurencyRate()
+            {
+                Code = "FD",
+                ExchangeDate = DateTime.Now,
+                Id = 1,
+                Name = string.Empty,
+                Rate = 0.0
+            });
         }
 
         private void ExchangeWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -38,13 +51,14 @@ namespace Client
 
         private void _client_ServerResponseReceived(object? sender, string e)
         {
+            Debug.WriteLine("message");
             try
             {
                 var currencyData = JsonConvert.DeserializeObject<CurencyData>(e);
 
                 if (currencyData != null)
                 {
-                    _currencyData = currencyData;
+                    CurrencyManager.SetNewInfo(currencyData.curencyRates);
                 }
             }
             catch (JsonException ex)
@@ -64,5 +78,4 @@ namespace Client
 
         }
     }
-
 }
