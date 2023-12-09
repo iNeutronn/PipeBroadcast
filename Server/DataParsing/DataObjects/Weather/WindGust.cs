@@ -6,8 +6,4 @@
         public Direction Degrees { get; set; }
     }
 
-
-
-
-
 }

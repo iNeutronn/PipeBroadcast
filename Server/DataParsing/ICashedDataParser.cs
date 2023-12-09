@@ -1,4 +1,6 @@
-﻿namespace Server.DataParsing
+﻿using System.Net;
+
+namespace Server.DataParsing
 {
     //public interface ICashedDataParser<T>
     //{
@@ -17,7 +19,17 @@
             if ((DateTime.Now - LastUpdate > TimeOut) || CachedData == null)
             {
                 LastUpdate = DateTime.Now;
+
                 return GetDataFromSource();
+                //try
+                //{
+                //    T data = GetDataFromSource();
+                //    return data;
+                //}
+                //catch(WebException ex)
+                //{
+                //    return CachedData;
+                //}
             }
             else
             {
