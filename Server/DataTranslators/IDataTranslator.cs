@@ -29,7 +29,7 @@ namespace Server
             _client = client;
             _data = data;
             _interval = interval;
-            _timer = new Timer(Translate, null, Timeout.Infinite, Timeout.Infinite);
+            _timer = new Timer(Translate!, null, Timeout.Infinite, Timeout.Infinite);
         }
 
         public void StartTranslate()

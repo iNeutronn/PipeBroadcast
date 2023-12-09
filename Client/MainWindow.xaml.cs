@@ -29,7 +29,7 @@ namespace Client
             InitializeComponent();
             _hostIP = hostIP;
             _clientPipe = new ClientPipe(_hostIP.ToString() == "0.0.0.0" ? "." : _hostIP.ToString());
-            Task.Run(() => _clientPipe.Connect());
+            _clientPipe.Connect();
         }
 
         private void WatherButton_Click(object sender, RoutedEventArgs e)

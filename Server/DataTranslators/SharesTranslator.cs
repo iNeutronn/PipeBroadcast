@@ -6,7 +6,7 @@ using System.Text;
 using Server.DataParsing.DataObjects.Shares;
 using System.Net;
 
-namespace Server.DataTranslator
+namespace Server.DataTranslators
 {
     internal class SharesTranslator : DataTranslator<TradingData>
     {

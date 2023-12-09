@@ -45,7 +45,9 @@ public class ClientPipe : IDisposable
         string pipeName = "pipe" + _id.ToString();
         _pipeClient = new NamedPipeClientStream(_host, pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
         _pipeClient.Connect();
-        ListenServer();
+        listenServerThrerad = new Thread(ListenServer);
+        listenServerThrerad.IsBackground = true;
+        listenServerThrerad.Start();
     }
 
 
