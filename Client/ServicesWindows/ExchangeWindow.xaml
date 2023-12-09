@@ -12,8 +12,8 @@
         <Grid Height="467" VerticalAlignment="Center" Margin="0,0,-56,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="131*"/>
-                <ColumnDefinition Width="397*"/>
+                <ColumnDefinition Width="113*"/>
+                <ColumnDefinition Width="388*"/>
                 <ColumnDefinition Width="0*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -22,7 +22,7 @@
             </Grid.RowDefinitions>
             <Label Content="updated " HorizontalAlignment="Left" Margin="232,82,0,0" VerticalAlignment="Top" Width="66" Height="26" Grid.Column="2" Grid.RowSpan="2"/>
             <Label Content="data here" HorizontalAlignment="Left" Margin="283,82,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.259,-0.26" Height="26" Width="60" Grid.Column="2" Grid.RowSpan="2"/>
-            <Rectangle Fill="#FFAF9AC9" HorizontalAlignment="Center" Width="109" Grid.RowSpan="2" Grid.Column="1" Height="467" VerticalAlignment="Top"/>
+            <Rectangle Fill="#FFAF9AC9" Margin="10,0,0,0" HorizontalAlignment="Left" Width="109" Grid.RowSpan="2" Grid.Column="1" Height="467" VerticalAlignment="Top"/>
 
             <Border BorderBrush="Black" BorderThickness="1,1,1,1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="229" Width="355" Grid.Column="2" Margin="13,19,0,0" Grid.Row="1">
 
@@ -36,7 +36,7 @@
                     </Grid.Resources>
 
                     <!-- Replace this with your DataGrid -->
-                    <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="0" SelectionChanged="dataGrid_SelectionChanged" Margin="33,10,25,-20" FontSize="14">
+                    <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="0" SelectionChanged="dataGrid_SelectionChanged" Margin="39,10,31,10" FontSize="14">
 
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
