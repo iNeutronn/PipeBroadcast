@@ -59,9 +59,6 @@ namespace Client
             }
         }
 
-        private void Unsubscribe_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        private void Unsubscribe_Click(object sender, RoutedEventArgs e) => Close();
     }
 }

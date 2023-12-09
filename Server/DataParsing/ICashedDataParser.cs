@@ -15,16 +15,8 @@ namespace Server.DataParsing
             if ((DateTime.Now - LastUpdate > TimeOut) || CachedData == null)
             {
                 LastUpdate = DateTime.Now;
-                try
-                {
-                    T data = GetDataFromSource();
-                    return data;
-                }
-                catch (WebException ex)
-                {
-                    Console.WriteLine("Failed to get data from source " + ex.Message);
-                    return CachedData;
-                }
+
+                return GetDataFromSource();
             }
             else
             {
