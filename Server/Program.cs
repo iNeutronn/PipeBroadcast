@@ -3,10 +3,10 @@ using Server;
 using System.Runtime.ConstrainedExecution;
 
 
-//ClientManager clients = new ClientManager();
+ClientManager clients = new ClientManager();
 
-//Console.ReadLine();
-
+Console.ReadLine();
+/*
 WheatherTest();// no needed / can be changed to any other function
 
 
@@ -30,3 +30,4 @@ void SharesTest()
     var data = parser.GetData();
     Console.WriteLine(data);
 }
+*/
