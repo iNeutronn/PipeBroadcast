@@ -79,7 +79,7 @@ namespace Server
 
                     Guid clientId = Guid.NewGuid();
                     Console.WriteLine("new Id = " + clientId);
-                    Client client = new (clientId, this);
+                    Client client = new (clientId);
 
                     ++_idCounter;
 
