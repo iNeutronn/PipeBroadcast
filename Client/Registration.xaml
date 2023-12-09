@@ -3,45 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Registration"  Height="397" Width="291" >
 
-    <Viewbox Stretch="Uniform">
+    <Viewbox Stretch="Uniform" Margin="0,0,9,-6">
 
-        <Grid Height="368" Width="234">
+        <Grid Height="355" Width="234">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="82"/>
-                <ColumnDefinition Width="118"/>
-                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="0"/>
                 <RowDefinition Height="Auto" MinHeight="0"/>
-                <RowDefinition Height="Auto" MinHeight="66"/>
-                <RowDefinition Height="75"/>
-                <RowDefinition Height="11.84"/>
-                <RowDefinition Height="75.16"/>
+                <RowDefinition Height="Auto" MinHeight="71"/>
+                <RowDefinition Height="76"/>
+                <RowDefinition Height="89"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="1" BorderThickness="3" BorderBrush="#FFCEC7CE" Background="White" Margin="10,10,0,0" Grid.RowSpan="6" Grid.ColumnSpan="3" Height="313" VerticalAlignment="Top"/>
+            <Border Grid.Row="1" BorderThickness="3" BorderBrush="#FFCEC7CE" Background="White" Margin="10,10,0,0" Grid.RowSpan="5" Grid.ColumnSpan="2" Height="313" VerticalAlignment="Top"/>
 
 
-            <Button Content="Sign Up" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="124" Background="#FFE3CDF1" FontSize="14" FontFamily="Yu Gothic" FontWeight="Bold" Click="Button_Click" Margin="29,10,0,0" Grid.ColumnSpan="2"/>
+            <Button Content="Sign Up" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="124" Background="#FFE3CDF1" FontSize="14" FontFamily="Yu Gothic" FontWeight="Bold" Click="Button_Click" Margin="29,10,0,0"/>
 
 
-            <Label Content="SIGN UP" Grid.Column="1" Grid.Row="1" Background="White" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Height="60" Width="172" Margin="6,21,0,0" Grid.RowSpan="3" Grid.ColumnSpan="2"/>
+            <Label Content="SIGN UP" Grid.Column="1" Grid.Row="1" Background="White" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Height="60" Width="172" Margin="6,21,0,0" Grid.RowSpan="3"/>
 
 
-            <Label Content="UserName" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top" Height="25" Margin="8,6,25,0" Grid.ColumnSpan="2"/>
+            <Label Content="UserName" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top" Height="25" Margin="8,6,25,0"/>
 
 
-            <Label Content="IP Address" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top" Height="24" Margin="8,0,25,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <Label Content="IP Address" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top" Height="24" Margin="8,0,25,0"/>
 
 
-            <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" Width="172" Margin="3,36,0,5" Grid.ColumnSpan="2"/>
+            <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" Width="172" Margin="3,36,0,5"/>
 
 
-            <TextBox x:Name="hostIp" Grid.Row="5" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" Width="172" Margin="3,17,0,23" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="hostIp" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" Width="172" Margin="3,29,0,23" Grid.Column="1"/>
         </Grid>
     </Viewbox >
 </Window>
