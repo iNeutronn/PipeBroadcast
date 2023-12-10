@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Net;
 using System.Windows;
@@ -26,7 +27,14 @@ namespace Client
         {
             Debug.WriteLine(e);
 
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                NoConnectionWindow noConnectionWindow = new NoConnectionWindow();
 
+                noConnectionWindow.Show();
+
+                Close();
+            });    
         }
 
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)

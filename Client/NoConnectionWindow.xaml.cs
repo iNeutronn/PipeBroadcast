@@ -17,9 +17,9 @@ namespace Client
     /// <summary>
     /// Interaction logic for NoConnection.xaml
     /// </summary>
-    public partial class NoConnection : Window
+    public partial class NoConnectionWindow : Window
     {
-        public NoConnection()
+        public NoConnectionWindow()
         {
             InitializeComponent();
         }

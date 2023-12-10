@@ -112,7 +112,14 @@ namespace Server
         public void SendAnswer(TransitionObject transitionObject)
         {
             byte[] ServerAnswer = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(transitionObject));
-            _pipeServer.Write(ServerAnswer, 0, ServerAnswer.Length);
+            try
+            {
+                _pipeServer.Write(ServerAnswer, 0, ServerAnswer.Length);
+            }
+            catch (IOException)
+            {
+
+            }
         }
 
         public void Dispose()
