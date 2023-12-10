@@ -13,6 +13,10 @@ namespace Client
     {
         private IPAddress _hostIP;
         private ClientPipe _clientPipe;
+        WeatherWindow weatherWindow;
+        SharesWindow sharesWindow;
+        ExchangeWindow exchange;
+
         public MainWindow(IPAddress hostIP)
         {
             InitializeComponent();
@@ -33,12 +37,16 @@ namespace Client
 
                 noConnectionWindow.Show();
 
+                // I want to close all other windowa while closing Main window but I have infinite waiting
+
                 Close();
-            });    
+            });
         }
 
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
+
+
             _clientPipe.Dispose();
         }
 
@@ -48,29 +56,29 @@ namespace Client
 
             _clientPipe.SubscribeToWeather();
 
-            WeatherWindow weatherWindow = new (_clientPipe);
+            weatherWindow = new(_clientPipe);
 
             weatherWindow.Show();
         }
 
         private void SharesButton_Click(object sender, RoutedEventArgs e)
         {
-            if(_clientPipe.IsSubscribedToShares) return;
+            if (_clientPipe.IsSubscribedToShares) return;
 
             _clientPipe.SubscribeToShares();
 
-            SharesWindow sharesWindow = new (_clientPipe);
+            sharesWindow = new(_clientPipe);
 
             sharesWindow.Show();
         }
 
         private void CurrencyButton_Click(object sender, RoutedEventArgs e)
         {
-            if(_clientPipe.IsSubscribedToCurrency) return;
+            if (_clientPipe.IsSubscribedToCurrency) return;
 
             _clientPipe.SubscribeToCurrency();
 
-            ExchangeWindow exchange = new (_clientPipe);
+            exchange = new(_clientPipe);
 
             exchange.Show();
         }
