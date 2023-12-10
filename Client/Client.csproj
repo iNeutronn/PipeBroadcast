@@ -21,10 +21,15 @@
     <None Remove="maxresdefault.jpg" />
     <None Remove="png-transparent-analytics-chart-growth-increasing-stocks-business-success-icon.png" />
     <None Remove="ServicesWindows\claudy.png" />
+    <None Remove="ServicesWindows\day.png" />
     <None Remove="ServicesWindows\lviv_sunrises_and_sunsets.jpg" />
+    <None Remove="ServicesWindows\night.png" />
+    <None Remove="ServicesWindows\rain.png" />
     <None Remove="ServicesWindows\snow.png" />
     <None Remove="ServicesWindows\water_icon_251896.png" />
     <None Remove="ServicesWindows\wind-weather-lines-group-symbol_icon-icons.com_54629.png" />
+    <None Remove="ServicesWindows\WindDirection.png" />
+    <None Remove="ServicesWindows\windSpeed.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,10 +55,15 @@
     <Resource Include="Images\png-transparent-analytics-chart-growth-increasing-stocks-business-success-icon.png" />
     <Resource Include="maxresdefault.jpg" />
     <Resource Include="ServicesWindows\claudy.png" />
+    <Resource Include="ServicesWindows\day.png" />
     <Resource Include="ServicesWindows\lviv_sunrises_and_sunsets.jpg" />
+    <Resource Include="ServicesWindows\night.png" />
+    <Resource Include="ServicesWindows\rain.png" />
     <Resource Include="ServicesWindows\snow.png" />
     <Resource Include="ServicesWindows\water_icon_251896.png" />
     <Resource Include="ServicesWindows\wind-weather-lines-group-symbol_icon-icons.com_54629.png" />
+    <Resource Include="ServicesWindows\WindDirection.png" />
+    <Resource Include="ServicesWindows\windSpeed.png" />
   </ItemGroup>
 
 </Project>

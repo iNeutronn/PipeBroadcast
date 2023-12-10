@@ -17,13 +17,13 @@
                 <TranslateTransform X="-1.063"/>
             </TransformGroup>
         </Border.RenderTransform>
-        <Grid Height="574" VerticalAlignment="Top" Margin="3,0,-3,0">
+        <Grid Height="553" VerticalAlignment="Top" Margin="8,3,5,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="160*"/>
-                <RowDefinition Height="207*"/>
-                <RowDefinition Height="64*"/>
-                <RowDefinition Height="19*"/>
-                <RowDefinition Height="140*"/>
+                <RowDefinition Height="156*"/>
+                <RowDefinition Height="201*"/>
+                <RowDefinition Height="75*"/>
+                <RowDefinition Height="39*"/>
+                <RowDefinition Height="103*"/>
             </Grid.RowDefinitions>
             <Image HorizontalAlignment="Left" Height="132" VerticalAlignment="Center" Width="425" Source="/ServicesWindows/lviv_sunrises_and_sunsets.jpg" Margin="-5,0,0,0"/>
 
@@ -63,19 +63,38 @@
                     <SolidColorBrush Color="White" />
                 </Button.Background>
             </Button>
-            
-            <Image x:Name="weatherIcon" HorizontalAlignment="Left" Height="128" Margin="10,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="137" Source="/ServicesWindows/claudy.png"/>
-            <Label Content="Lviv, Ukraine" HorizontalAlignment="Left" Margin="148,38,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="36" Height="58" Width="206"/>
-            <Label Content="-4°C" HorizontalAlignment="Left" Margin="28,96,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Height="64" Width="88"/>
-            <Image HorizontalAlignment="Left" Height="50" Margin="24,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="51" Source="/ServicesWindows/water_icon_251896.png"/>
-            <Label Content="Humidity" HorizontalAlignment="Left" Margin="24,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Height="30" Width="75"/>
-            <Label Content="Wind Speed" HorizontalAlignment="Left" Margin="200,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Height="30" Width="96"/>
-            <Image HorizontalAlignment="Left" Height="76" Margin="202,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="86" Source="/ServicesWindows/wind-weather-lines-group-symbol_icon-icons.com_54629.png"/>
-            <Label x:Name="precipicationLabel" Content="27%" HorizontalAlignment="Left" Margin="85,0,0,0" Grid.Row="2" VerticalAlignment="Center" FontSize="20" Height="38" Width="48"/>
-            <Label x:Name="windSpeedLabel"  HorizontalAlignment="Left" Margin="285,0,0,0" Grid.Row="2" VerticalAlignment="Center" FontSize="20" Height="38"/>
-            <Button Content="Unsubscribe" HorizontalAlignment="Left" Height="40" Margin="108,30,0,0" VerticalAlignment="Top" Width="190" Background="#FFAF9AC9" FontSize="18" Click="Unsubscribe_Click" Grid.Row="4"/>
 
+            <Image x:Name="weatherIcon" HorizontalAlignment="Left" Height="111" Margin="7,14,0,0" VerticalAlignment="Top" Width="111" Source="/ServicesWindows/claudy.png" Grid.Row="1"/>
+            <Label Content="Lviv, Ukraine" HorizontalAlignment="Left" Margin="131,13,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="36" Height="58" Width="206"/>
+            <Label Content="-4°C" HorizontalAlignment="Left" Margin="25,96,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Height="64" Width="88"/>
+            <Image HorizontalAlignment="Left" Height="50" Margin="9,21,0,0" Grid.Row="2" VerticalAlignment="Top" Width="51" Source="/ServicesWindows/rain.png" RenderTransformOrigin="0.458,0.869"/>
+            <Label Content="Precipitation" HorizontalAlignment="Left" Margin="14,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="14" Height="30" Width="110"/>
+            <Label Content="Wind Speed" HorizontalAlignment="Left" Margin="158,5,0,0" Grid.Row="3" VerticalAlignment="Top" FontSize="14" Height="30" Width="96"/>
+            <Image HorizontalAlignment="Left" Height="51" Margin="135,18,0,0" Grid.Row="2" VerticalAlignment="Top" Width="55" Source="/ServicesWindows/windSpeed.png" RenderTransformOrigin="0.51,0.637"/>
+            <Label x:Name="precipicationLabel" Content="27%" HorizontalAlignment="Left" Margin="62,26,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="18" Height="38" Width="67"/>
+            <Label x:Name="windSpeedLabel"  HorizontalAlignment="Left" Margin="194,26,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="18" Height="33" Width="94" Content="                         "/>
+            <Button Content="Unsubscribe" HorizontalAlignment="Left" Height="40" Margin="112,29,0,0" VerticalAlignment="Top" Width="190" Background="#FFAF9AC9" FontSize="18" Click="Unsubscribe_Click" Grid.Row="4"/>
+            <Image HorizontalAlignment="Left" Height="42" Margin="298,24,0,0" Grid.Row="2" VerticalAlignment="Top" Width="54" Source="/ServicesWindows/WindDirection.png" RenderTransformOrigin="1.148,1.104"/>
+            <Label Content="Wind Direction" HorizontalAlignment="Left" Margin="292,6,0,0" Grid.Row="3" VerticalAlignment="Top" FontSize="14" Height="30" Width="114"/>
+            <Label x:Name="precipicationLabel_Copy" Content="SSL" HorizontalAlignment="Left" Margin="352,22,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="18" Height="38" Width="67"/>
 
+            <Button BorderBrush="White" Background="White" Margin="346,51,6,103" Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ServicesWindows/night.png" Width="36" Height="34" />
+
+                </StackPanel>
+            </Button>
+
+            <Button BorderBrush="White" Background="White" Margin="344,10,7,142" Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/ServicesWindows/day.png" Width="34" Height="33" />
+
+                </StackPanel>
+            </Button>
+            <Label Content="min" HorizontalAlignment="Left" Margin="169,68,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="41" FontWeight="Bold"/>
+            <Label Content="max" HorizontalAlignment="Left" Margin="254,67,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="43" FontWeight="Bold"/>
+            <Label Content="-4°C" HorizontalAlignment="Left" Margin="167,91,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="41"/>
+            <Label Content="-1°C" HorizontalAlignment="Left" Margin="255,91,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="41"/>
 
 
 
