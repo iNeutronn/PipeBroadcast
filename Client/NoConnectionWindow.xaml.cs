@@ -22,6 +22,21 @@ namespace Client
         public NoConnectionWindow()
         {
             InitializeComponent();
+            Closing += NoConnectionWindow_Closing;
+        }
+
+        private void NoConnectionWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                Close();
+            });
+           
         }
     }
 }

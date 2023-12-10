@@ -35,9 +35,7 @@ namespace Client
             {
                 NoConnectionWindow noConnectionWindow = new NoConnectionWindow();
 
-                noConnectionWindow.Show();
-
-                // I want to close all other windowa while closing Main window but I have infinite waiting
+                noConnectionWindow.ShowDialog();
 
                 Close();
             });
@@ -45,8 +43,6 @@ namespace Client
 
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
-
-
             _clientPipe.Dispose();
         }
 
