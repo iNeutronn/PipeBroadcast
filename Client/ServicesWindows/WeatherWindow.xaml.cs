@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Server.DataParsing.DataObjects.Weather;
+using System.Threading;
 
 namespace Client
 {
@@ -32,6 +33,48 @@ namespace Client
             _client = client;
             _client.OnWeatherRecived += _client_ServerResponseReceived;
             Closing += WeatherWindow_Closing;
+
+            RewriteInterfacePeriodically();
+        }
+
+        private void RewriteInterfacePeriodically()
+        {
+            Thread t = new Thread(() =>
+            {
+                while (true)
+                {
+                    RewriteInterface();
+
+                    Thread.Sleep(100);
+                }
+            });
+            t.Name = "RewriteInterface";
+            t.IsBackground = true;
+            t.Start();
+        }
+
+        private void RewriteInterface()
+        {
+            if (_weatherData == null) return;
+
+            var forecast = _weatherData.DailyForecasts[0].Day;
+
+            var wind = forecast.Wind;
+
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                windSpeedLabel.Content = $"{wind.Speed.Value} {wind.Speed.Unit} {wind.Direction.English}";
+
+                int imageNumber = forecast.Icon;
+                var str = (imageNumber < 10) ? ("0" + imageNumber.ToString()) : imageNumber.ToString();
+
+                ImageSource imageSource = new BitmapImage(new Uri($"https://developer.accuweather.com/sites/default/files/{str}-s.png", UriKind.RelativeOrAbsolute));
+
+                weatherIcon.Source = imageSource;
+
+                precipicationLabel.Content = $"{forecast.PrecipitationProbability} %";
+            });
+
         }
 
         private void WeatherWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -42,6 +85,7 @@ namespace Client
 
         private void _client_ServerResponseReceived(object? sender, string e)
         {
+            Debug.WriteLine("message");
             try
             {
                 var weatherData = JsonConvert.DeserializeObject<WhetherForecast>(e);

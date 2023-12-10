@@ -25,6 +25,8 @@ namespace Client
         private void _clientPipe_OnExceptionRecived(object? sender, string e)
         {
             Debug.WriteLine(e);
+
+
         }
 
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)

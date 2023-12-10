@@ -63,15 +63,15 @@
                     <SolidColorBrush Color="White" />
                 </Button.Background>
             </Button>
-            <Image HorizontalAlignment="Left" Height="128" Margin="10,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="137" Source="/ServicesWindows/claudy.png"/>
+            <Image x:Name="weatherIcon" HorizontalAlignment="Left" Height="128" Margin="10,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="137" Source="/ServicesWindows/claudy.png"/>
             <Label Content="Lviv, Ukraine" HorizontalAlignment="Left" Margin="148,38,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="36" Height="58" Width="206"/>
             <Label Content="-4°C" HorizontalAlignment="Left" Margin="28,96,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Height="64" Width="88"/>
             <Image HorizontalAlignment="Left" Height="50" Margin="24,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="51" Source="/ServicesWindows/water_icon_251896.png"/>
             <Label Content="Humidity" HorizontalAlignment="Left" Margin="24,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Height="30" Width="75"/>
             <Label Content="Wind Speed" HorizontalAlignment="Left" Margin="200,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="16" Height="30" Width="96"/>
             <Image HorizontalAlignment="Left" Height="76" Margin="202,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="86" Source="/ServicesWindows/wind-weather-lines-group-symbol_icon-icons.com_54629.png"/>
-            <Label Content="27%" HorizontalAlignment="Left" Margin="85,0,0,0" Grid.Row="2" VerticalAlignment="Center" FontSize="20" Height="38" Width="48"/>
-            <Label Content="8.45 km/h" HorizontalAlignment="Left" Margin="285,0,0,0" Grid.Row="2" VerticalAlignment="Center" FontSize="20" Height="38" Width="98"/>
+            <Label x:Name="precipicationLabel" Content="27%" HorizontalAlignment="Left" Margin="85,0,0,0" Grid.Row="2" VerticalAlignment="Center" FontSize="20" Height="38" Width="48"/>
+            <Label x:Name="windSpeedLabel"  HorizontalAlignment="Left" Margin="285,0,0,0" Grid.Row="2" VerticalAlignment="Center" FontSize="20" Height="38"/>
             <Button Content="Unsubscribe" HorizontalAlignment="Left" Height="40" Margin="108,30,0,0" VerticalAlignment="Top" Width="190" Background="#FFAF9AC9" FontSize="18" Click="Unsubscribe_Click" Grid.Row="4"/>
 
 

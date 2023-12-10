@@ -3,7 +3,7 @@
     public class Wind
     {
         public SpeedDirection Speed { get; set; }
-        public Direction Degrees { get; set; }
+        public Direction Direction { get; set; }
     }
 
 

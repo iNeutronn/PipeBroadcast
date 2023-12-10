@@ -27,7 +27,7 @@ namespace Server.DataTranslators
                         transitionObject = new TransitionObject()
                         {
                             Data = JsonConvert.SerializeObject(_data.GetData(), Formatting.Indented),
-                            Header = "CurrencyData"
+                            Header = "SharesData"
                         };
 
                     }
