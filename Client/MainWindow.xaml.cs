@@ -45,6 +45,7 @@ namespace Client
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
             _clientPipe.Dispose();
+            Environment.Exit(0);
         }
 
         private void WatherButton_Click(object sender, RoutedEventArgs e)
