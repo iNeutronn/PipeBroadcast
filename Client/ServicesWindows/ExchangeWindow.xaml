@@ -36,7 +36,7 @@
                     </Grid.Resources>
 
                     <!-- Replace this with your DataGrid -->
-                    <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="0" IsReadOnly="True" Margin="33,10,25,-20" FontSize="14" ItemsSource ="{Binding CurrencyManager}">
+                    <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="0" IsReadOnly="True" Margin="39,10,30,0" FontSize="14" ItemsSource ="{Binding CurrencyManager}">
 
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">

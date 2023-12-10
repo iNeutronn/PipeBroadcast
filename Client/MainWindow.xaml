@@ -14,12 +14,13 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="319*"/>
+            <RowDefinition Height="49*"/>
+            <RowDefinition Height="18*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.ColumnSpan="3" Margin="18,18,18,0" Grid.RowSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="3*" />
@@ -67,7 +68,8 @@
             </Grid>
 
         </Grid>
+        <Button Grid.Column="1" Content="Exit" HorizontalAlignment="Left" Margin="21,0,0,0" Grid.Row="2" VerticalAlignment="Center" Background="#FFAF9AC9" FontSize="18" Height="29" Width="92"/>
 
     </Grid>
-    
+
 </Window>
