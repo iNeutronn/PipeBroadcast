@@ -31,7 +31,7 @@
 
 
 
-            <Button Content="day1" HorizontalAlignment="Left" Height="58" Margin="11,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
+            <Button x:Name="day1Button" Content="day1" HorizontalAlignment="Left" Height="58" Margin="11,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>
@@ -40,25 +40,25 @@
 
 
 
-            <Button Content="day2" HorizontalAlignment="Left" Height="58" Margin="91,89,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
+            <Button x:Name="day2Button" Content="day2" HorizontalAlignment="Left" Height="58" Margin="91,89,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>
             </Button>
 
-            <Button Content="day3" HorizontalAlignment="Left" Height="58" Margin="172,89,0,0" VerticalAlignment="Top" Width="64" FontSize="20" FontWeight="Bold" Click="Day_Click">
+            <Button x:Name="day3Button" Content="day3" HorizontalAlignment="Left" Height="58" Margin="172,89,0,0" VerticalAlignment="Top" Width="64" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>
             </Button>
 
-            <Button Content="day4" HorizontalAlignment="Left" Height="58" Margin="253,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
+            <Button x:Name="day4Button" Content="day4" HorizontalAlignment="Left" Height="58" Margin="253,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>
             </Button>
 
-            <Button Content="day5" HorizontalAlignment="Left" Height="58" Margin="333,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
+            <Button x:Name="day5Button" Content="day5" HorizontalAlignment="Left" Height="58" Margin="333,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>

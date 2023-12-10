@@ -28,7 +28,7 @@ namespace Client
     {
         private WhetherForecast _weatherData;
         private ClientPipe _client;
-        private Dictionary<int,BitmapImage> icons =new();
+        private Dictionary<int, BitmapImage> icons = new();
         private int forecastNum = 0;
         bool isDay = true;
 
@@ -49,8 +49,8 @@ namespace Client
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string iconsPath = System.IO.Path.Combine(basePath, "..", "..", "..", "WeatherIcons");
 
-            var files =  Directory.GetFiles(iconsPath);
-            foreach ( string file in files ) 
+            var files = Directory.GetFiles(iconsPath);
+            foreach (string file in files)
             {
                 string name = System.IO.Path.GetFileNameWithoutExtension(file);
                 var image = new BitmapImage(new Uri(file));
@@ -77,8 +77,15 @@ namespace Client
         private void RewriteInterface()
         {
             if (_weatherData == null) return;
-            
-            dynamic forecast = (isDay) ? _weatherData.DailyForecasts[forecastNum].Day : _weatherData.DailyForecasts[forecastNum].Night; 
+
+            day1Button.Content = _weatherData.DailyForecasts[0].Date.Day.ToString();
+            day2Button.Content = _weatherData.DailyForecasts[1].Date.Day.ToString();
+            day3Button.Content = _weatherData.DailyForecasts[2].Date.Day.ToString();
+            day4Button.Content = _weatherData.DailyForecasts[3].Date.Day.ToString();
+            day5Button.Content = _weatherData.DailyForecasts[4].Date.Day.ToString();
+
+
+            dynamic forecast = (isDay) ? _weatherData.DailyForecasts[forecastNum].Day : _weatherData.DailyForecasts[forecastNum].Night;
 
             var temperature = _weatherData.DailyForecasts[forecastNum].Temperature;
             var wind = forecast.Wind;
@@ -131,7 +138,26 @@ namespace Client
         {
             Button button = sender as Button;
 
-            forecastNum = int.Parse(((string)button.Content)[3..]) - 1;
+            switch (button)
+            {
+                case var _ when button == day1Button:
+                    forecastNum = 0;
+                    break;
+                case var _ when button == day2Button:
+                    forecastNum = 1;
+                    break;
+                case var _ when button == day3Button:
+                    forecastNum = 2;
+                    break;
+                case var _ when button == day4Button:
+                    forecastNum = 3;
+                    break;
+                case var _ when button == day5Button:
+                    forecastNum = 4;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Light_Click(object sender, RoutedEventArgs e)
