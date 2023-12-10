@@ -28,6 +28,7 @@ namespace Client
         private ClientPipe _client;
         private List<BitmapImage> icons = new List<BitmapImage>();
         private int forecastNum = 0;
+        bool isDay = true;
 
         public WeatherWindow(ClientPipe client)
         {
@@ -54,7 +55,7 @@ namespace Client
                 {
                     RewriteInterface();
 
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                 }
             });
             t.Name = "RewriteInterface";
@@ -65,14 +66,19 @@ namespace Client
         private void RewriteInterface()
         {
             if (_weatherData == null) return;
+            
+            dynamic forecast = (isDay) ? _weatherData.DailyForecasts[forecastNum].Day : _weatherData.DailyForecasts[forecastNum].Night; 
 
-            var forecast = _weatherData.DailyForecasts[forecastNum].Day;
-
+            var temperature = _weatherData.DailyForecasts[forecastNum].Temperature;
             var wind = forecast.Wind;
 
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                windSpeedLabel.Content = $"{wind.Speed.Value} {wind.Speed.Unit} {wind.Direction.English}";
+                minTempLabel.Content = $"{temperature.Minimum.Value}°{temperature.Minimum.Unit}";
+                maxTempLabel.Content = $"{temperature.Maximum.Value}°{temperature.Maximum.Unit}";
+
+                windSpeedLabel.Content = $"{wind.Speed.Value} {wind.Speed.Unit}";
+                windDirectionLabel.Content = $"{wind.Direction.English}";
 
                 int imageNumber = forecast.Icon;
 
@@ -116,5 +122,16 @@ namespace Client
 
             forecastNum = int.Parse(((string)button.Content)[3..]) - 1;
         }
+
+        private void Light_Click(object sender, RoutedEventArgs e)
+        {
+            isDay = true;
+        }
+
+        private void Dark_Click(object sender, RoutedEventArgs e)
+        {
+            isDay = false;
+        }
+
     }
 }

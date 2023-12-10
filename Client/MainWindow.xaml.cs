@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Net;
@@ -79,5 +80,9 @@ namespace Client
             exchange.Show();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
     }
 }

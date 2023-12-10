@@ -76,25 +76,25 @@
             <Button Content="Unsubscribe" HorizontalAlignment="Left" Height="40" Margin="112,29,0,0" VerticalAlignment="Top" Width="190" Background="#FFAF9AC9" FontSize="18" Click="Unsubscribe_Click" Grid.Row="4"/>
             <Image HorizontalAlignment="Left" Height="42" Margin="298,24,0,0" Grid.Row="2" VerticalAlignment="Top" Width="54" Source="/ServicesWindows/WindDirection.png" RenderTransformOrigin="1.148,1.104"/>
             <Label Content="Wind Direction" HorizontalAlignment="Left" Margin="292,6,0,0" Grid.Row="3" VerticalAlignment="Top" FontSize="14" Height="30" Width="114"/>
-            <Label x:Name="precipicationLabel_Copy" Content="SSL" HorizontalAlignment="Left" Margin="352,22,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="18" Height="38" Width="67"/>
+            <Label x:Name="windDirectionLabel" Content="SSL" HorizontalAlignment="Left" Margin="352,22,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="18" Height="38" Width="67"/>
 
-            <Button BorderBrush="White" Background="White" Margin="346,51,6,103" Grid.Row="1">
+            <Button BorderBrush="White" Background="White" Margin="346,51,6,103" Grid.Row="1" Click="Dark_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ServicesWindows/night.png" Width="36" Height="34" />
 
                 </StackPanel>
             </Button>
 
-            <Button BorderBrush="White" Background="White" Margin="344,10,7,142" Grid.Row="1">
+            <Button BorderBrush="White" Background="White" Margin="344,10,7,142" Grid.Row="1" Click="Light_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/ServicesWindows/day.png" Width="34" Height="33" />
 
                 </StackPanel>
             </Button>
-            <Label Content="min" HorizontalAlignment="Left" Margin="169,68,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="41" FontWeight="Bold"/>
-            <Label Content="max" HorizontalAlignment="Left" Margin="254,67,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="43" FontWeight="Bold"/>
-            <Label Content="-4°C" HorizontalAlignment="Left" Margin="167,91,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="41"/>
-            <Label Content="-1°C" HorizontalAlignment="Left" Margin="255,91,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="41"/>
+            <Label  Content="min" HorizontalAlignment="Left" Margin="169,68,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="41" FontWeight="Bold"/>
+            <Label  Content="max" HorizontalAlignment="Left" Margin="254,67,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="43" FontWeight="Bold"/>
+            <Label x:Name="minTempLabel" Content="-4°C" HorizontalAlignment="Left" Margin="167,91,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="63"/>
+            <Label x:Name="maxTempLabel" Content="-1°C" HorizontalAlignment="Left" Margin="255,91,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="62"/>
 
 
 

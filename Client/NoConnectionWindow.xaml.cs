@@ -35,8 +35,7 @@ namespace Client
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
                 Close();
-            });
-           
+            });          
         }
     }
 }
