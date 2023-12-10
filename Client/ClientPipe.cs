@@ -113,7 +113,7 @@ public class ClientPipe : IDisposable
             {
                 bytesRead = _pipeClient.Read(buffer, 0, buffer.Length);
             }
-            catch (ObjectDisposedException ex)
+            catch (ObjectDisposedException)
             {
                 break; 
             }

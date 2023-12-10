@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Server.DataParsing.DataObjects.Weather;
 using System.Threading;
+using System.IO;
+
 
 namespace Client
 {
@@ -26,7 +28,7 @@ namespace Client
     {
         private WhetherForecast _weatherData;
         private ClientPipe _client;
-        private List<BitmapImage> icons = new List<BitmapImage>();
+        private Dictionary<int,BitmapImage> icons =new();
         private int forecastNum = 0;
         bool isDay = true;
 
@@ -37,14 +39,23 @@ namespace Client
             _client.OnWeatherRecived += _client_ServerResponseReceived;
             Closing += WeatherWindow_Closing;
 
-            for (int imageNumber = 1; imageNumber <= 44; imageNumber++)
-            {
-                var str = (imageNumber < 10) ? ("0" + imageNumber.ToString()) : imageNumber.ToString();
+            LoadIcons();
 
-                icons.Add(new BitmapImage(new Uri(@$"https://developer.accuweather.com/sites/default/files/{str}-s.png", UriKind.RelativeOrAbsolute)));
-            }
-            
             RewriteInterfacePeriodically();
+        }
+
+        private void LoadIcons()
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string iconsPath = System.IO.Path.Combine(basePath, "..", "..", "..", "WeatherIcons");
+
+            var files =  Directory.GetFiles(iconsPath);
+            foreach ( string file in files ) 
+            {
+                string name = System.IO.Path.GetFileNameWithoutExtension(file);
+                var image = new BitmapImage(new Uri(file));
+                icons.Add(int.Parse(name), image);
+            }
         }
 
         private void RewriteInterfacePeriodically()
