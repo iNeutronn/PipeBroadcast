@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="SharesWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="SharesWindow" Height="418" Width="693" ResizeMode="NoResize">
+    <Grid Margin="0,0,0,-16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="335*"/>
+            <RowDefinition Height="83*"/>
+        </Grid.RowDefinitions>
+        <Button  Content="Unsubscribe" Grid.Row="1" HorizontalAlignment="Center" Height="40" Margin="0,14,0,0" VerticalAlignment="Top" Width="190" Background="#FFAF9AC9" FontSize="18" Click="Unsubscribe_Click"/>
+        <Rectangle Fill="#FFE3E3E3" HorizontalAlignment="Center" Width="693" Height="69" VerticalAlignment="Top"/>
+        <Label  Content="Company Shares" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="44" FontWeight="Bold" Margin="0,25,0,0" />
     </Grid>
 </Window>
