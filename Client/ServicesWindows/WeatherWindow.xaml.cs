@@ -26,6 +26,8 @@ namespace Client
     {
         private WhetherForecast _weatherData;
         private ClientPipe _client;
+        private List<BitmapImage> icons = new List<BitmapImage>();
+        private int forecastNum = 0;
 
         public WeatherWindow(ClientPipe client)
         {
@@ -34,6 +36,13 @@ namespace Client
             _client.OnWeatherRecived += _client_ServerResponseReceived;
             Closing += WeatherWindow_Closing;
 
+            for (int imageNumber = 1; imageNumber <= 44; imageNumber++)
+            {
+                var str = (imageNumber < 10) ? ("0" + imageNumber.ToString()) : imageNumber.ToString();
+
+                icons.Add(new BitmapImage(new Uri(@$"https://developer.accuweather.com/sites/default/files/{str}-s.png", UriKind.RelativeOrAbsolute)));
+            }
+            
             RewriteInterfacePeriodically();
         }
 
@@ -45,7 +54,7 @@ namespace Client
                 {
                     RewriteInterface();
 
-                    Thread.Sleep(100);
+                    Thread.Sleep(500);
                 }
             });
             t.Name = "RewriteInterface";
@@ -57,7 +66,7 @@ namespace Client
         {
             if (_weatherData == null) return;
 
-            var forecast = _weatherData.DailyForecasts[0].Day;
+            var forecast = _weatherData.DailyForecasts[forecastNum].Day;
 
             var wind = forecast.Wind;
 
@@ -66,11 +75,8 @@ namespace Client
                 windSpeedLabel.Content = $"{wind.Speed.Value} {wind.Speed.Unit} {wind.Direction.English}";
 
                 int imageNumber = forecast.Icon;
-                var str = (imageNumber < 10) ? ("0" + imageNumber.ToString()) : imageNumber.ToString();
 
-                ImageSource imageSource = new BitmapImage(new Uri($"https://developer.accuweather.com/sites/default/files/{str}-s.png", UriKind.RelativeOrAbsolute));
-
-                weatherIcon.Source = imageSource;
+                weatherIcon.Source = icons[imageNumber - 1];
 
                 precipicationLabel.Content = $"{forecast.PrecipitationProbability} %";
             });
@@ -103,5 +109,12 @@ namespace Client
         }
 
         private void Unsubscribe_Click(object sender, RoutedEventArgs e) => Close();
+
+        private void Day_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            forecastNum = int.Parse(((string)button.Content)[3..]) - 1;
+        }
     }
 }

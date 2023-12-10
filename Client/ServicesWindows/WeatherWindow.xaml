@@ -31,7 +31,7 @@
 
 
 
-            <Button Content="day1" HorizontalAlignment="Left" Height="58" Margin="11,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold">
+            <Button Content="day1" HorizontalAlignment="Left" Height="58" Margin="11,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>
@@ -40,29 +40,30 @@
 
 
 
-            <Button Content="day2" HorizontalAlignment="Left" Height="58" Margin="91,89,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold">
+            <Button Content="day2" HorizontalAlignment="Left" Height="58" Margin="91,89,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>
             </Button>
 
-            <Button Content="day3" HorizontalAlignment="Left" Height="58" Margin="172,89,0,0" VerticalAlignment="Top" Width="64" FontSize="20" FontWeight="Bold">
+            <Button Content="day3" HorizontalAlignment="Left" Height="58" Margin="172,89,0,0" VerticalAlignment="Top" Width="64" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>
             </Button>
 
-            <Button Content="day4" HorizontalAlignment="Left" Height="58" Margin="253,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold">
+            <Button Content="day4" HorizontalAlignment="Left" Height="58" Margin="253,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>
             </Button>
 
-            <Button Content="day5" HorizontalAlignment="Left" Height="58" Margin="333,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold">
+            <Button Content="day5" HorizontalAlignment="Left" Height="58" Margin="333,88,0,0" VerticalAlignment="Top" Width="63" FontSize="20" FontWeight="Bold" Click="Day_Click">
                 <Button.Background>
                     <SolidColorBrush Color="White" />
                 </Button.Background>
             </Button>
+            
             <Image x:Name="weatherIcon" HorizontalAlignment="Left" Height="128" Margin="10,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="137" Source="/ServicesWindows/claudy.png"/>
             <Label Content="Lviv, Ukraine" HorizontalAlignment="Left" Margin="148,38,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="36" Height="58" Width="206"/>
             <Label Content="-4°C" HorizontalAlignment="Left" Margin="28,96,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Height="64" Width="88"/>
