@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="SharesWindow" Height="418" Width="693" ResizeMode="NoResize">
     <Grid Margin="0,0,0,-16">
@@ -14,5 +15,16 @@
         <Button  Content="Unsubscribe" Grid.Row="1" HorizontalAlignment="Center" Height="40" Margin="0,14,0,0" VerticalAlignment="Top" Width="190" Background="#FFAF9AC9" FontSize="18" Click="Unsubscribe_Click"/>
         <Rectangle Fill="#FFE3E3E3" HorizontalAlignment="Center" Width="693" Height="69" VerticalAlignment="Top"/>
         <Label  Content="Company Shares" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="44" FontWeight="Bold" Margin="0,25,0,0" />
+
+        <lvc:CartesianChart Series="{Binding SeriesCollection1}">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Date" />
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Price" />
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
+
+
     </Grid>
 </Window>

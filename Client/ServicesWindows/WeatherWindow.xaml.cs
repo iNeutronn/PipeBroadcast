@@ -66,7 +66,7 @@ namespace Client
                 {
                     RewriteInterface();
 
-                    Thread.Sleep(00);
+                    Thread.Sleep(200);
                 }
             });
             t.Name = "RewriteInterface";

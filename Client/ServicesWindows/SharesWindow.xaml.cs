@@ -16,6 +16,10 @@ using Server.DataParsing.DataObjects.Shares;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using Server.DataParsing.DataObjects.Curency;
+using Server.DataParsing.DataObjects.Weather;
+using System.Threading;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace Client
 {
@@ -27,12 +31,16 @@ namespace Client
         private TradingData _tradingData;
         private ClientPipe _client;
 
+        private SeriesCollection SeriesCollection1;
+        public Dictionary<DateTime, TradingDataPoint> OLVData => _tradingData.TimeSeries;
+
         public SharesWindow(ClientPipe client)
         {
             InitializeComponent();
             _client = client;
             _client.OnSharesRecived += _client_ServerResponseReceived;
             Closing += SharesWindow_Closing;
+            RewriteInterfacePeriodically();
         }
 
         private void SharesWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -57,6 +65,62 @@ namespace Client
                 Debug.WriteLine($"Error deserializing JSON: {ex.Message}");
                 // Handle the error as needed
             }
+        }
+
+
+
+        private void RewriteInterfacePeriodically()
+        {
+            Thread t = new Thread(() =>
+            {
+                while (true)
+                {
+                    RewriteInterface();
+
+                    Thread.Sleep(1000);
+                }
+            });
+            t.Name = "RewriteInterface";
+            t.Start();
+        }
+
+        private void RewriteInterface()
+        {
+            if (_tradingData == null) return;
+
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (SeriesCollection1 == null) SeriesCollection1 = new SeriesCollection();
+
+                SeriesCollection1.Clear();
+
+                var ticks = ConvertDictionaryToLong(OLVData);
+
+                SeriesCollection1.Add(new LineSeries
+                {
+                    Values = new ChartValues<double>(ticks)
+                });
+
+            });
+
+        }
+
+        public static List<double> ConvertDictionaryToLong(Dictionary<DateTime, TradingDataPoint> nullableDictionary)
+        {
+            List<double> ticksList = new();
+
+            foreach (var kvp in nullableDictionary.Values)
+            {
+                if (kvp == null)
+                {
+                    break; // Зупинити обробку, якщо зустріли null
+                }
+
+                double ticks = kvp.Open;
+                ticksList.Add(ticks);
+            }
+
+            return ticksList;
         }
 
         private void Unsubscribe_Click(object sender, RoutedEventArgs e) => Close();

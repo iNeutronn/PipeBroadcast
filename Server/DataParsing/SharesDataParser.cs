@@ -9,7 +9,7 @@ namespace Server.DataParsing
         private static readonly string _apikey = "W5JXT814B7SZ3MGZ";
         private static readonly string _function = "TIME_SERIES_INTRADAY";
         private static readonly string _symbol = "IBM";
-        private static readonly string _interval = "1min";
+        private static readonly string _interval = "5min";
         private WebClient _webClient = new WebClient();
 
         public SharesDataParser(TimeSpan? timeOut = null) : base(timeOut ?? DefoultTimeOut)
