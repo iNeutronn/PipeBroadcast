@@ -78,13 +78,6 @@ namespace Client
         {
             if (_weatherData == null) return;
 
-            day1Button.Content = _weatherData.DailyForecasts[0].Date.Day.ToString();
-            day2Button.Content = _weatherData.DailyForecasts[1].Date.Day.ToString();
-            day3Button.Content = _weatherData.DailyForecasts[2].Date.Day.ToString();
-            day4Button.Content = _weatherData.DailyForecasts[3].Date.Day.ToString();
-            day5Button.Content = _weatherData.DailyForecasts[4].Date.Day.ToString();
-
-
             dynamic forecast = (isDay) ? _weatherData.DailyForecasts[forecastNum].Day : _weatherData.DailyForecasts[forecastNum].Night;
 
             var temperature = _weatherData.DailyForecasts[forecastNum].Temperature;
@@ -92,6 +85,13 @@ namespace Client
 
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
+                day1Button.Content = _weatherData.DailyForecasts[0].Date.Day.ToString();
+                day2Button.Content = _weatherData.DailyForecasts[1].Date.Day.ToString();
+                day3Button.Content = _weatherData.DailyForecasts[2].Date.Day.ToString();
+                day4Button.Content = _weatherData.DailyForecasts[3].Date.Day.ToString();
+                day5Button.Content = _weatherData.DailyForecasts[4].Date.Day.ToString();
+
+
                 minTempLabel.Content = $"{temperature.Minimum.Value}°{temperature.Minimum.Unit}";
                 maxTempLabel.Content = $"{temperature.Maximum.Value}°{temperature.Maximum.Unit}";
 

@@ -6,7 +6,7 @@ namespace Server.DataParsing
 {
     internal class WeatherDataParser : CashedDataParser<WhetherForecast>, IDisposable
     {
-        private string _apiKey = "Dv89Uz6cEitkEt1af3WLY4RzN6pNJJbG";  //"Dv89Uz6cEitkEt1af3WLY4RzN6pNJJbG";
+        private string _apiKey = "Dbr370XMq7evKB22D0E5pxfoOVVrA2J8";  //"Dv89Uz6cEitkEt1af3WLY4RzN6pNJJbG";
         private string _cityKey = "324561"; //Lviv
         WebClient webClient = new WebClient();
         public static readonly TimeSpan DefoultTimeOut = TimeSpan.FromMinutes(30);
