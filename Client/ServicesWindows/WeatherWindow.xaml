@@ -97,6 +97,10 @@
             <Label x:Name="maxTempLabel" Content="-1°C" HorizontalAlignment="Left" Margin="255,91,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="30" Width="62"/>
 
 
+            
+            
+            
+            
 
         </Grid>
     </Border>
