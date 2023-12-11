@@ -64,9 +64,10 @@
                 </Button.Background>
             </Button>
 
-            <Image x:Name="weatherIcon" HorizontalAlignment="Left" Height="111" Margin="7,14,0,0" VerticalAlignment="Top" Width="111" Source="/ServicesWindows/claudy.png" Grid.Row="1"/>
+            <Image x:Name="weatherIcon" HorizontalAlignment="Left" Height="98" Margin="6,32,0,0" VerticalAlignment="Top" Width="114" Source="/ServicesWindows/claudy.png" Grid.Row="1" />
+
             <Label Content="Lviv, Ukraine" HorizontalAlignment="Left" Margin="131,13,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="36" Height="58" Width="206"/>
-            <Label Content="-4°C" HorizontalAlignment="Left" Margin="16,96,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Height="64" Width="88"/>
+            <Label Content="-1°C" HorizontalAlignment="Left" Margin="16,96,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Height="64" Width="88"/>
             <Image HorizontalAlignment="Left" Height="50" Margin="9,21,0,0" Grid.Row="2" VerticalAlignment="Top" Width="51" Source="/ServicesWindows/rain.png" RenderTransformOrigin="0.458,0.869"/>
             <Label Content="Precipitation" HorizontalAlignment="Left" Margin="14,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="14" Height="30" Width="110"/>
             <Label Content="Wind Speed" HorizontalAlignment="Left" Margin="158,5,0,0" Grid.Row="3" VerticalAlignment="Top" FontSize="14" Height="30" Width="96"/>

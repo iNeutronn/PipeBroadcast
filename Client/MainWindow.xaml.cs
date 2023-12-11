@@ -18,9 +18,10 @@ namespace Client
         SharesWindow sharesWindow;
         ExchangeWindow exchange;
 
-        public MainWindow(IPAddress hostIP)
+        public MainWindow(IPAddress hostIP, string userName)
         {
             InitializeComponent();
+            userNameText.Content = userName;
             _hostIP = hostIP;
             _clientPipe = new ClientPipe(_hostIP.ToString() == "0.0.0.0" ? "." : _hostIP.ToString());
             _clientPipe.Connect();

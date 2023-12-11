@@ -33,7 +33,7 @@
                 <Separator Height="10" Visibility="Hidden"/>
                 <Image HorizontalAlignment="Center" VerticalAlignment="Top" Height="142" Width="140" Source="/Images/360_F_537415032_2arob4vBmkeVYQRCRKxsN7dp2eWZWSOq.jpg"/>
                 <Label Content="Hello user" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
-                <Label Content="user id" HorizontalAlignment="Center"/>
+                <Label x:Name="userNameText" Content="user id" HorizontalAlignment="Center"/>
             </StackPanel>
 
 

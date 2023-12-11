@@ -7,8 +7,8 @@ namespace Server.DataParsing.DataObjects.Shares
     {
         [JsonProperty("Meta Data")]
         public MetaDate MetaDate { get; set; }
-        [JsonProperty("Time Series (1min)")]
-        public Dictionary<string, TradingDataPoint> TimeSeries { get; set; }
+        [JsonProperty("Time Series (5min)")]
+        public Dictionary<DateTime, TradingDataPoint> TimeSeries { get; set; }
 
     }
 }

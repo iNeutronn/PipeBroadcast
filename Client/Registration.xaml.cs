@@ -37,7 +37,7 @@ namespace Client
         {
             try
             {
-                MainWindow mainWindow = new MainWindow(IPAddress.Parse(hostIp.Text));
+                MainWindow mainWindow = new MainWindow(IPAddress.Parse(hostIp.Text), nameText.Text);
                 mainWindow.Show();
                 this.Close();
             }
