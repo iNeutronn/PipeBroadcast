@@ -30,13 +30,16 @@ namespace Client
     {
         private TradingData _tradingData;
         private ClientPipe _client;
+        public List<string> XLabels { get; set; } = new List<string>();
 
-        private SeriesCollection SeriesCollection1;
+
+        private SeriesCollection SeriesCollection1 = new SeriesCollection();
         public Dictionary<DateTime, TradingDataPoint> OLVData => _tradingData.TimeSeries;
 
         public SharesWindow(ClientPipe client)
         {
             InitializeComponent();
+            sharesChart.Series = SeriesCollection1;
             _client = client;
             _client.OnSharesRecived += _client_ServerResponseReceived;
             Closing += SharesWindow_Closing;
@@ -59,6 +62,8 @@ namespace Client
                 {
                     _tradingData = tradingData;
                 }
+
+                RewriteInterface();
             }
             catch (JsonException ex)
             {
@@ -71,17 +76,17 @@ namespace Client
 
         private void RewriteInterfacePeriodically()
         {
-            Thread t = new Thread(() =>
-            {
-                while (true)
-                {
-                    RewriteInterface();
+            //Thread t = new Thread(() =>
+            //{
+            //    while (true)
+            //    {
+            //        RewriteInterface();
 
-                    Thread.Sleep(1000);
-                }
-            });
-            t.Name = "RewriteInterface";
-            t.Start();
+            //        Thread.Sleep(1000);
+            //    }
+            //});
+            //t.Name = "RewriteInterface";
+            //t.Start();
         }
 
         private void RewriteInterface()
@@ -90,7 +95,8 @@ namespace Client
 
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                if (SeriesCollection1 == null) SeriesCollection1 = new SeriesCollection();
+                if (SeriesCollection1 == null)
+                    SeriesCollection1 = new SeriesCollection();
 
                 SeriesCollection1.Clear();
 
@@ -101,6 +107,7 @@ namespace Client
                     Values = new ChartValues<double>(ticks)
                 });
 
+                dateLabelAxis.Labels = OLVData.Keys.Select((e) => e.ToString()).ToList();
             });
 
         }
@@ -111,10 +118,6 @@ namespace Client
 
             foreach (var kvp in nullableDictionary.Values)
             {
-                if (kvp == null)
-                {
-                    break; // Зупинити обробку, якщо зустріли null
-                }
 
                 double ticks = kvp.Open;
                 ticksList.Add(ticks);
