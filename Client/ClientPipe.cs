@@ -19,6 +19,7 @@ public class ClientPipe : IDisposable
     private Task _serverResponses;
     private bool disposedValue;
     private Thread listenServerThrerad;
+    private StreamWriter sw = new StreamWriter("save.txt", true);
 
     private bool _isSubscribedToWeather = false;
     private bool _isSubscribedToShares = false;
@@ -122,6 +123,12 @@ public class ClientPipe : IDisposable
             {
                 string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
+                if (!File.Exists("save.txt"))
+                    File.Create("save.txt");
+                
+                sw.WriteLine(DateTime.Now+"       "+receivedData);
+                
+
                 TransitionObject transitionObject = JsonConvert.DeserializeObject<TransitionObject>(receivedData!)!;
                 switch (transitionObject.Header)
                 {
@@ -210,6 +217,7 @@ public class ClientPipe : IDisposable
 
                 _pipeClient?.Close();
                 _pipeClient?.Dispose();
+                sw.Dispose();
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override finalizer

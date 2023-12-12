@@ -26,6 +26,7 @@ namespace Server.DataParsing
             string QUERY_URL = $"https://www.alphavantage.co/query?function={_function}&symbol={_symbol}&interval={_interval}&apikey={_apikey}";
             string json = _webClient.DownloadString(QUERY_URL);
             TradingData data = Newtonsoft.Json.JsonConvert.DeserializeObject<TradingData>(json)!;
+
             return data;
         }
     }
